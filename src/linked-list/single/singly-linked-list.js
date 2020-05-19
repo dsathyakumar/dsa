@@ -1,153 +1,14 @@
 'use strict';
 
-const rreverse = node => {
-    if (typeof node !== null && typeof node.next === null) {
-        return node;
-    }
-
-    // first time this will ever execute will be for the last Node in the list
-    // in that case, reverse will be the last node
-    // and, <node> will be the (last node - 1).
-    const reversedHead = rreverse(list, node.next);
-    // at the moment, 
-    // - (last node - 1).next = lastNode
-    // - (last node - 1).next.next => lastNode.next => NULL
-    // by doing, (last node - 1).next.next = node, we are moving the (lastNode - 1)
-    // as to be the 2nd Node after the head Node (which is now the Last Node)
-    // and we set its next to NULL (which should be filled by previous recursive calls)
-    node.next.next = node;
-    node.next = null;
-    return reversedHead;
-};
-
-/**
- * Inserts at the 1st position of the Singly Linked List
- * It could be an empty / non-empty list.
- * @param {SinglyLinkedList} list 
- * @param {Node} node 
- */
-const insertFirst = (list, node) => {
-    if (list instanceof SinglyLinkedList) {
-        let tempNode = list.head;
-        list.head = node;
-        node.next = tempNode;
-        tempNode = undefined;
-        list.length++;
-    }
-};
-
-/**
- * Inserts at the end of the SinglyLinkedList
- * @param {SinglyLinkedList} list 
- * @param {Node} node 
- */
-const insertLast = (list, node) => {
-    if (list instanceof SinglyLinkedList) {
-        let currentNode = list.head;
-        while(currentNode) {
-            // if currentNode doesn't have a NEXT, its the last NODE
-            if (!currentNode.next) {
-                currentNode.next = node;
-                node.next = null;
-                list.length++;
-                break;
-            }
-            currentNode = currentNode.next;
-        }
-    }
-};
-
-/**
- * Inserts at a specific index
- * @param {SinglyLinkedList} list 
- * @param {Node} node 
- * @param {Number} index
- */
-const insertAtIndex = (list, node, index) => {
-    if (list instanceof SinglyLinkedList) {
-        let idx = 0,
-            currentNode = list.head,
-            tempNode;
-        
-        while(currentNode) {
-            // we have to insert in the next position.
-            if ((idx + 1) === index) {
-                tempNode = currentNode.next;
-                currentNode.next = node;
-                node.next = tempNode;
-                tempNode = undefined;
-                list.length++;
-                break;
-            }
-
-            currentNode = currentNode.next;
-            idx++;
-        }
-    }
-};
-
-/**
- * Deletes at the 0th position of the list
- * @param {SinglyLinkedList} list 
- */
-const deleteFirst = list => {
-    if (list instanceof SinglyLinkedList) {
-        let tempNode = list.head;
-        list.head = tempNode.next;
-        tempNode = undefined;
-        list.length--;
-    }
-};
-
-/**
- * Deletes at the last position of the list
- * @param {SinglyLinkedList} list 
- */
-const deleteLast = list => {
-    if (list instanceof SinglyLinkedList) {
-        let currentNode = list.head;
-        let prevNode = null;
-
-        while(currentNode) {
-            // if currentNode's next points to NULL, this is the last Node
-            if (!currentNode.next) {
-                prevNode.next = null;
-                currentNode = undefined;
-                list.length--;
-                break;
-            }
-
-            prevNode = currentNode;
-            currentNode = currentNode.next;
-        }
-    }
-};
-
-/**
- * Deletes at a specific index
- * @param {SinglyLinkedList} list 
- * @param {Number} index 
- */
-const deleteAtIndex = (list, index) => {
-    if (list instanceof SinglyLinkedList) {
-        let idx = 0,
-            currentNode = list.head,
-            prevNode = null,
-            tempNode;
-        
-        while(currentNode) {
-            if (idx === index) {
-                tempNode = currentNode.next;
-                prevNode.next = tempNode;
-                currentNode = undefined;
-                list.length--;
-                break;
-            }
-            prevNode = currentNode;
-            currentNode = currentNode.next;
-        }
-    }
-};
+const {
+    rreverse,
+    insertAtIndex,
+    insertFirst,
+    insertLast,
+    deleteAtIndex,
+    deleteLast,
+    deleteFirst
+} = require('./utils');
 
 /**
  * The Singly Linked List Class
@@ -272,6 +133,12 @@ class SinglyLinkedList {
      * For a 1 element list, use deleteFirst
      */
     delete(index) {
+        // if the list is empty, there is nothing to delete
+        if (!this.length) {
+            console.warn(`List is empty. Nothing to delete`);
+            return;
+        }
+
         // At max, we can delete from lastIndex, but not at an index
         // that equals to length of list (as in the case of insert)
         // Don't wanna allow negative indexes either.
@@ -280,17 +147,11 @@ class SinglyLinkedList {
             return;
         }
 
-        // if the list is empty, there is nothing to delete
-        if (!this.length) {
-            console.warn(`List is empty. Nothing to delete`);
-            return;
-        }
-
         // At this point, List is certainly not empty.
         // Check if its delete at 0th index / last index / in between
-        if ((index && index === 0) || this.length === 1) {
+        if ((typeof index !== 'undefined' && index === 0) || this.length === 1) {
             deleteFirst(this);
-        } else if (index && (index !== (this.length - 1))) {
+        } else if (typeof index !== 'undefined' && (index !== (this.length - 1))) {
             // at this point, its neither 0th nor last
             deleteAtIndex(this, index);
         } else {
@@ -308,7 +169,6 @@ class SinglyLinkedList {
             let currentNode = this.head;
 
             while(currentNode) {
-                console.log(currentNode.data);
                 currentNode = currentNode.next;
             }
         }
@@ -342,7 +202,7 @@ class SinglyLinkedList {
     }
 
     /**
-     * Iteratively reverses the linked List
+     * Reverses the given SLL iteratively
      */
     reverse() {
         let currentNode = this.head,
@@ -350,7 +210,7 @@ class SinglyLinkedList {
             nextNode,
             idx = 0;
         
-        while(currentNode && idx < this.length) {
+        while(currentNode && idx < (this.length)) {
             nextNode = currentNode.next;
             currentNode.next = prevNode;
             if (idx === (this.length - 1)) {
@@ -362,8 +222,11 @@ class SinglyLinkedList {
         }
     }
 
+    /**
+     * Reverses the given SLL recursively
+     */
     recursiveReverse() {
-        rreverse(this.head);
+      this.head = rreverse(this.head);
     }
 }
 
