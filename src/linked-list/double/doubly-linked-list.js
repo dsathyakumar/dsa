@@ -8,7 +8,11 @@ const {
     deleteLast,
     deleteAtIndex,
     rreverse
-} = require('./utils');
+} = require('./util');
+
+const {
+  Node
+} = require('./node');
 
 /**
  * The Doubly Linked List (DLL) class
@@ -41,6 +45,11 @@ class DoublyLinkedList {
         }
     }
 
+    /**
+     * Finds a specified value if present in the DLL
+     * and returns the first index occurrence
+     * @param {*} value 
+     */
     find(value) {
         // if there is no value to search, return.
         if (!value) {
@@ -75,19 +84,26 @@ class DoublyLinkedList {
         return this.length;
     }
 
+    /**
+     * Gets the data associated with the Node at the index
+     * @param {Number} index
+     */
     get(index) {
-        if (!index || typeof index !== 'number') {
+        // check if list is empty
+        if (!this.length && this.head === null) {
+            console.warn(`List is empty`);
+            return;
+        }
+
+        // check if index is a valid number
+        if (typeof index === 'undefined' || typeof index !== 'number') {
             console.warn(`Index is either not specified or is not a number`);
             return;
         }
 
+        // check if index is out of bounds
         if (index < 0 || index > (this.length - 1)) {
             console.warn(`Index specified is out of bounds`);
-            return;
-        }
-
-        if (!this.length && this.head === null) {
-            console.warn(`List is empty`);
             return;
         }
 
@@ -107,12 +123,20 @@ class DoublyLinkedList {
         return value;
     }
 
+    /**
+     * Inserts a DLL Node into a given index specified
+     * - Last, first, in between
+     * @param {Node} node
+     * @param {Number} index
+     */
     insert(node, index) {
+        // node to be an instance of DLL Node
         if (!node || !(node instanceof Node)) {
             console.warn(`Node is empty or not an instanceof Node`);
             return;
         }
 
+        // check for out of bound indexes
         if (index < 0 || index > this.length) {
             console.warn(`Index is out of bounds of insertion`);
             return;
@@ -123,40 +147,57 @@ class DoublyLinkedList {
             return;
         }
 
-        if ((typeof index !== undefined) && (index !== 0) && (index !== this.length)) {
+        if ((typeof index !== 'undefined') && (index !== 0) && (index !== this.length)) {
             insertAtIndex(this, node, index);
         } else {
             insertLast(this, node);
         }
     }
 
+    /**
+     * Deletes an element either at
+     * - first
+     * - last
+     * - an index in between
+     * @param {Number} index
+     */
     delete(index) {
+        // nothing to delete in an empty list
         if (!this.length && this.head === null) {
             console.warn(`Cannot delete from empty list`);
             return;
         }
 
+        // check if the index is out of bounds
         if ((index > this.length - 1) || (index < 0)) {
             console.warn(`Deletion at an index that is out of bounds`);
             return;
         }
 
+        // there is only one element in the list & if it has to be deleted,
+        // ideally we could deleteFirst and deleteLast, bt we chose to deleteFirst
         if ((typeof index !== 'undefined' && index === 0) || (this.length === 1)) {
             deleteFirst(this);
         } else if (typeof index !== 'undefined' && (index !== (this.length - 1))) {
+            // if its not the last element, then it means delete from some index
             deleteAtIndex(this, index);
         } else {
             deleteLast(this);
         }
     }
 
+    /**
+     * Modifies a given index's Data to the newData
+     * @param {Number} index
+     * @param {*} newData
+     */
     modify(index, newData) {
         if (!this.length && this.head === null) {
             console.warn(`List is empty`);
             return;
         }
 
-        if (!index) {
+        if (typeof index === 'undefined') {
             console.warn(`Index must be specified`);
             return;
         }
@@ -184,6 +225,9 @@ class DoublyLinkedList {
         }
     }
 
+    /**
+     * Iteratively reverses the DLL
+     */
     reverse() {
         if (!this.length && this.head === null) {
             console.warn(`List is empty`);
@@ -211,6 +255,9 @@ class DoublyLinkedList {
         }
     }
 
+    /**
+     * Recursively reverse the DLL
+     */
     recursiveReverse() {
         if (!this.length && this.head === null) {
             console.warn(`List is empty`);
@@ -219,7 +266,11 @@ class DoublyLinkedList {
         this.head = rreverse(this.head);
     }
 
+    /**
+     * Destroys the DLL
+     */
     destroy() {
+        // cannot destroy an empty DLL
         if (!this.length && this.head === null) {
             console.warn(`List is empty`);
             return;
@@ -237,6 +288,11 @@ class DoublyLinkedList {
         }
     }
 
+    /**
+     * Updates all the Nodes with the oldData to newData
+     * @param {*} oldData
+     * @param {*} newData
+     */
     updateAll(oldData, newData) {
         if (!this.length && this.head === null) {
             console.warn(`List is empty`);
