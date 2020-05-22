@@ -49,6 +49,8 @@ class Stack {
         const data = this.stack[this.top];
         this.stack[this.top] = null;
         this.top--;
+
+        // return the popped data
         return data;
     }
 
