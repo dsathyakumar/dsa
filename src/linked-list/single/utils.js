@@ -32,13 +32,11 @@ const rreverse = node => {
  * @param {Node} node 
  */
 const insertFirst = (list, node) => {
-    if (list instanceof SinglyLinkedList) {
-        let tempNode = list.head;
-        list.head = node;
-        node.next = tempNode;
-        tempNode = undefined;
-        list.length++;
-    }
+    let tempNode = list.head;
+    list.head = node;
+    node.next = tempNode;
+    tempNode = undefined;
+    list.length++;
 };
 
 /**
@@ -47,18 +45,16 @@ const insertFirst = (list, node) => {
  * @param {Node} node 
  */
 const insertLast = (list, node) => {
-    if (list instanceof SinglyLinkedList) {
-        let currentNode = list.head;
-        while(currentNode) {
-            // if currentNode doesn't have a NEXT, its the last NODE
-            if (!currentNode.next) {
-                currentNode.next = node;
-                node.next = null;
-                list.length++;
-                break;
-            }
-            currentNode = currentNode.next;
+    let currentNode = list.head;
+    while(currentNode) {
+        // if currentNode doesn't have a NEXT, its the last NODE
+        if (!currentNode.next) {
+            currentNode.next = node;
+            node.next = null;
+            list.length++;
+            break;
         }
+        currentNode = currentNode.next;
     }
 };
 
@@ -69,25 +65,23 @@ const insertLast = (list, node) => {
  * @param {Number} index
  */
 const insertAtIndex = (list, node, index) => {
-    if (list instanceof SinglyLinkedList) {
-        let idx = 0,
-            currentNode = list.head,
-            tempNode;
-        
-        while(currentNode) {
-            // we have to insert in the next position.
-            if ((idx + 1) === index) {
-                tempNode = currentNode.next;
-                currentNode.next = node;
-                node.next = tempNode;
-                tempNode = undefined;
-                list.length++;
-                break;
-            }
-
-            currentNode = currentNode.next;
-            idx++;
+    let idx = 0,
+        currentNode = list.head,
+        tempNode;
+    
+    while(currentNode) {
+        // we have to insert in the next position.
+        if ((idx + 1) === index) {
+            tempNode = currentNode.next;
+            currentNode.next = node;
+            node.next = tempNode;
+            tempNode = undefined;
+            list.length++;
+            break;
         }
+
+        currentNode = currentNode.next;
+        idx++;
     }
 };
 
@@ -96,12 +90,10 @@ const insertAtIndex = (list, node, index) => {
  * @param {SinglyLinkedList} list 
  */
 const deleteFirst = list => {
-    if (list instanceof SinglyLinkedList) {
-        let tempNode = list.head;
-        list.head = tempNode.next;
-        tempNode = undefined;
-        list.length--;
-    }
+    let tempNode = list.head;
+    list.head = tempNode.next;
+    tempNode = undefined;
+    list.length--;
 };
 
 /**
@@ -109,22 +101,20 @@ const deleteFirst = list => {
  * @param {SinglyLinkedList} list 
  */
 const deleteLast = list => {
-    if (list instanceof SinglyLinkedList) {
-        let currentNode = list.head;
-        let prevNode = null;
+    let currentNode = list.head;
+    let prevNode = null;
 
-        while(currentNode) {
-            // if currentNode's next points to NULL, this is the last Node
-            if (!currentNode.next) {
-                prevNode.next = null;
-                currentNode = undefined;
-                list.length--;
-                break;
-            }
-
-            prevNode = currentNode;
-            currentNode = currentNode.next;
+    while(currentNode) {
+        // if currentNode's next points to NULL, this is the last Node
+        if (!currentNode.next) {
+            prevNode.next = null;
+            currentNode = undefined;
+            list.length--;
+            break;
         }
+
+        prevNode = currentNode;
+        currentNode = currentNode.next;
     }
 };
 
@@ -134,24 +124,22 @@ const deleteLast = list => {
  * @param {Number} index 
  */
 const deleteAtIndex = (list, index) => {
-    if (list instanceof SinglyLinkedList) {
-        let idx = 0,
-            currentNode = list.head,
-            prevNode = null,
-            nextNode;
-        
-        while(currentNode) {
-            if (idx === index) {
-                nextNode = currentNode.next;
-                prevNode.next = nextNode;
-                currentNode = undefined;
-                list.length--;
-                break;
-            }
-            prevNode = currentNode;
-            currentNode = currentNode.next;
-            idx++;
+    let idx = 0,
+        currentNode = list.head,
+        prevNode = null,
+        nextNode;
+    
+    while(currentNode) {
+        if (idx === index) {
+            nextNode = currentNode.next;
+            prevNode.next = nextNode;
+            currentNode = undefined;
+            list.length--;
+            break;
         }
+        prevNode = currentNode;
+        currentNode = currentNode.next;
+        idx++;
     }
 };
 
