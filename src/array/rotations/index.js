@@ -19,6 +19,10 @@ console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4], 2));
 console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4], 3));
 console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4, 5], 1));
 
+console.log(rotateByReversals([1, 2, 3, 4], 2));
+console.log(rotateByReversals([1, 2, 3, 4], 3));
+console.log(rotateByReversals([1, 2, 3, 4, 5], 1));
+
 exports.rotateArrayByCyclicReplacements = rotateArrayByCyclicReplacements;
 exports.rotateArrayByModuloDivision = rotateArrayByModuloDivision;
 exports.rotateByReversals = rotateByReversals;
