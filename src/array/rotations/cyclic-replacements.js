@@ -53,8 +53,6 @@ const rotateArrayByCyclicReplacements = (arr, numberOfRotations) => {
         }
     } while(replacementCount < arr.length)
 
-    console.log(arr);
-
     return arr;
 };
 
