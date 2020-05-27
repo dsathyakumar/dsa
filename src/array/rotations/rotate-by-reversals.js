@@ -19,10 +19,10 @@ const rotateByReversals = (arr, numberOfRotations) => {
     reverseArrayBySwaps(arr);
 
     // reverse the 1st k elemenst where k=numberOfRotations
-    reverseArrayBySwapsBasedOnRange(arr, 0, numberOfRotations)
+    reverseArrayBySwapsBasedOnRange(arr, 0, (numberOfRotations - 1));
 
     // reverse the remaining n-k elemenst where k=numberOfRotations n=arr.length
-    reverseArrayBySwapsBasedOnRange(arr)
+    reverseArrayBySwapsBasedOnRange(arr, numberOfRotations, arr.length-1);
 
     return arr;
 }
