@@ -39,5 +39,7 @@ const {
 // console.log(reverseArrayBySwapsBasedOnRange([1, 2, 3, 4], 0 , 1)); // size is even
 // console.log(reverseArrayBySwapsBasedOnRange([1, 2, 3, 4, 5], 0, 2)); // size is odd
 
-exports.recursiveReverseBySwaps;
-exports.reverseArrayBySwaps;
+exports.recursiveReverseBySwaps = recursiveReverseBySwaps;
+exports.reverseArrayBySwaps = reverseArrayBySwaps;
+exports.reverseArrayBySwapsBasedOnRange = reverseArrayBySwapsBasedOnRange;
+
