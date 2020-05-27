@@ -1,5 +1,14 @@
 'use strict';
 
+const {
+    reverseArrayBySwaps,
+    reverseArrayBySwapsBasedOnRange
+} = require('./iterative-reverse-swap')
+
+const {
+    recursiveReverseBySwaps
+} = require('./recursive-reverse-swap');
+
 /**
  * There are multiple ways to reverse elements of the array.
  * 1) In-place O(N) way where the 0th element is swapped with N-1 th element.
@@ -15,62 +24,6 @@
  * the given array and unshift it into the new array.
  */
 
-/**
- * Performs array reversal in-place by swapping out elements.
- * This performs a full reversal of the array.
- * Space Complexity = O(1)
- * Time complexity = O(N)
- */
-const reverseArrayBySwaps = (arr) => {
-    if (!arr.length) {
-        console.warn(`Array is empty`);
-        return;
-    }
-
-    let forwardIdx = 0,
-        reverseIdx,
-        temp;
-    
-    // this loop always goes only half the way (as the other half would have been swapped)
-    // doesn't really matter if N (arr.length) is ODD or EVEN sizes.
-    while(forwardIdx < (arr.length/2)) {
-        // for i = 0, we need n-1 element, => n - (i+1) => n - (0+1) => n - 1
-        // for i = 1, we need n-2 element, => n - (i+1) => n - (1+1) => n - 2
-        // so the reversed index can be computed as (n-i-1)
-        let reverseIdx = (arr.length - forwardIdx - 1);
-
-        // this is for the middle element, to prevent needeless swap
-        if (forwardIdx <= reverseIdx) {
-            temp = arr[reverseIdx];
-            arr[reverseIdx] = arr[forwardIdx];
-            arr[forwardIdx] = temp;
-            forwardIdx++;
-        }
-    }
-
-    return arr;
-};
-
-/**
- * Performs the same in-place reverse, in an recursive manner
- * This can perform reversals within a range on the array.
- * @param {Array} arr
- * @param {Number} start
- * @param {Number} end
- */
-const recursiveReverseBySwaps = (arr, start, end) => {
-    let temp;
-
-    if (start <= end) {
-        temp = arr[end];
-        arr[end] = arr[start];
-        arr[start] = temp;
-
-        recursiveReverseBySwaps(arr, start+1, end-1);
-    } else {
-        return;
-    }
-};
 
 // console.log(reverseArrayBySwaps([1, 2, 3, 4])); // size is even
 // console.log(reverseArrayBySwaps([1, 2, 3, 4, 5])); // size is odd
@@ -82,6 +35,9 @@ const recursiveReverseBySwaps = (arr, start, end) => {
 // arr = [1, 2, 3, 4, 5]; // 
 // recursiveReverseBySwaps(arr, 0, arr.length - 1);
 // console.log(arr);
+
+// console.log(reverseArrayBySwapsBasedOnRange([1, 2, 3, 4], 0 , 1)); // size is even
+// console.log(reverseArrayBySwapsBasedOnRange([1, 2, 3, 4, 5], 0, 2)); // size is odd
 
 exports.recursiveReverseBySwaps;
 exports.reverseArrayBySwaps;
