@@ -17,6 +17,7 @@
 
 /**
  * Performs array reversal in-place by swapping out elements.
+ * This performs a full reversal of the array.
  * Space Complexity = O(1)
  * Time complexity = O(N)
  */
@@ -51,7 +52,8 @@ const reverseArrayBySwaps = (arr) => {
 };
 
 /**
- * Performs the same in-place reverse, in an iterative manner
+ * Performs the same in-place reverse, in an recursive manner
+ * This can perform reversals within a range on the array.
  * @param {Array} arr
  * @param {Number} start
  * @param {Number} end
