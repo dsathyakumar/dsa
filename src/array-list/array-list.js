@@ -21,7 +21,7 @@ class ArrayList {
 
         // creating a fixed size array
         this.arr = new Array(capacity);
-        this.arr.fill(null);
+        this.arr.fill(null); // in JS, this one step is an extra cost we incur to create Static arrays
         Object.seal(this.arr);
 
         // to start with there are no elements
