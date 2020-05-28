@@ -19,6 +19,10 @@ const rotateArrayByModuloDivision = (arr, numberOfRotations) => {
         return;
     }
 
+    if (numberOfRotations > arr.length) {
+        numberOfRotations = (numberOfRotations % arr.length);
+    }
+
     let tempArr = new Array(arr.length);
 
     arr.forEach((el, idx) => {

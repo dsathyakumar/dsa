@@ -27,6 +27,10 @@ const rotateRightByReversal = (arr, numberOfRotations) => {
         return;
     }
 
+    if (numberOfRotations > arr.length) {
+        numberOfRotations = (numberOfRotations % arr.length);
+    }
+
     // fully reverse the array
     reverseArrayBySwaps(arr);
 
@@ -60,6 +64,10 @@ const rotateLeftByReversal = (arr, numberOfRotations) => {
     if (!arr.length) {
         console.warn('Array is empty');
         return;
+    }
+
+    if (numberOfRotations > arr.length) {
+        numberOfRotations = (numberOfRotations % arr.length);
     }
     
     // reverse the 1st k elemenst where k=numberOfRotations

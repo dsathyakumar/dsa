@@ -19,6 +19,10 @@ const rotateRightByCyclicReplacements = (arr, numberOfRotations) => {
         return;
     }
 
+    if (numberOfRotations > arr.length) {
+        numberOfRotations = (numberOfRotations % arr.length);
+    }
+
     let replacementCount = 0,
     arrayIdxCounter = 0,
     replacedValue = null,
@@ -65,6 +69,10 @@ const rotateLeftByCyclicReplacements = (arr, numberOfRotations) => {
     if (!arr.length) {
         console.warn('Array is empty');
         return;
+    }
+
+    if (numberOfRotations > arr.length) {
+        numberOfRotations = (numberOfRotations % arr.length);
     }
 
     let arrayIdxCounter = 0,
