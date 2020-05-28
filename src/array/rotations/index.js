@@ -1,28 +1,42 @@
 'use strict';
 
 const {
-    rotateArrayByCyclicReplacements
+    rotateLeftByCyclicReplacements,
+    rotateRightByCyclicReplacements
 } = require('./cyclic-replacements');
 const {
     rotateArrayByModuloDivision
 } = require('./rotate-by-modulo-division');
 
 const {
-    rotateByReversals
+    rotateRightByReversal,
+    rotateLeftByReversal
 } = require('./rotate-by-reversals');
 
 // console.log(rotateArrayByModuloDivision([1, 2, 3, 4], 2));
 // console.log(rotateArrayByModuloDivision([1, 2, 3, 4], 3));
-// console.log(rotateArrayByModuloDivision([1, 2, 3, 4, 5], 2));
+// console.log('\n');
 
-// console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4], 2));
-// console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4], 3));
-// console.log(rotateArrayByCyclicReplacements([1, 2, 3, 4, 5], 1));
+// console.log(rotateRightByCyclicReplacements([1, 2, 3, 4], 2));
+// console.log(rotateRightByCyclicReplacements([1, 2, 3, 4], 3));
+// console.log('\n');
 
-// console.log(rotateByReversals([1, 2, 3, 4], 2));
-// console.log(rotateByReversals([1, 2, 3, 4], 3));
-// console.log(rotateByReversals([1, 2, 3, 4, 5], 1));
+// console.log(rotateLeftByCyclicReplacements([1, 2, 3, 4], 2));
+// console.log(rotateLeftByCyclicReplacements([1, 2, 3, 4], 3));
+// console.log('\n');
 
-exports.rotateArrayByCyclicReplacements = rotateArrayByCyclicReplacements;
+// console.log(rotateLeftByReversal([1, 2, 3, 4], 2));
+// console.log(rotateLeftByReversal([1, 2, 3, 4], 3));
+// console.log('\n');
+
+// console.log(rotateRightByReversal([1, 2, 3, 4], 2));
+// console.log(rotateRightByReversal([1, 2, 3, 4], 3));
+// console.log('\n');
+
+exports.rotateLeftByCyclicReplacements = rotateLeftByCyclicReplacements;
+exports.rotateRightByCyclicReplacements = rotateRightByCyclicReplacements;
+
 exports.rotateArrayByModuloDivision = rotateArrayByModuloDivision;
-exports.rotateByReversals = rotateByReversals;
+
+exports.rotateRightByReversal = rotateRightByReversal;
+exports.rotateLeftByReversal = rotateLeftByReversal;

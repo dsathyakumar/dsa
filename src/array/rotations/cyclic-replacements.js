@@ -13,7 +13,12 @@
  * @param {Array} arr
  * @param {Number} numberOfRotations
  */
-const rotateArrayByCyclicReplacements = (arr, numberOfRotations) => {
+const rotateRightByCyclicReplacements = (arr, numberOfRotations) => {
+    if (!arr.length) {
+        console.warn('Array is empty');
+        return;
+    }
+
     let replacementCount = 0,
     arrayIdxCounter = 0,
     replacedValue = null,
@@ -51,12 +56,58 @@ const rotateArrayByCyclicReplacements = (arr, numberOfRotations) => {
             computedIdx = -1;
             replacedValue = null;
         }
-    } while(replacementCount < arr.length)
+    } while(replacementCount < arr.length);
 
     return arr;
 };
 
-exports.rotateArrayByCyclicReplacements = rotateArrayByCyclicReplacements;
+const rotateLeftByCyclicReplacements = (arr, numberOfRotations) => {
+    if (!arr.length) {
+        console.warn('Array is empty');
+        return;
+    }
+
+    let arrayIdxCounter = 0,
+        replacedValue = null,
+        replacementCount = 0,
+        computedIdx = -1;
+    
+    do {
+        if (computedIdx === -1 && replacedValue === null) {
+            computedIdx = arrayIdxCounter - numberOfRotations;
+        } else {
+            computedIdx = computedIdx - numberOfRotations;
+        }
+
+        if (computedIdx < 0) {
+            computedIdx = computedIdx + arr.length;
+        }
+
+        if (replacedValue) {
+            let tempValue = replacedValue;
+            replacedValue = arr[computedIdx];
+            arr[computedIdx] = tempValue;
+        } else {
+            replacedValue = arr[computedIdx];
+            arr[computedIdx] = arr[arrayIdxCounter];
+        }
+
+        // replace with originalValue
+        replacementCount = (replacementCount + 1);
+
+        // reset computedIdx and arrayIdxCounter
+        if (computedIdx === arrayIdxCounter) {
+            arrayIdxCounter = arrayIdxCounter + 1;
+            computedIdx = -1;
+            replacedValue = null;
+        }
+    } while (replacementCount < arr.length);
+
+    return arr;
+};
+
+exports.rotateRightByCyclicReplacements = rotateRightByCyclicReplacements;
+exports.rotateLeftByCyclicReplacements = rotateLeftByCyclicReplacements;
 
 /**
  * A = [1,2,3,4] D=2 N=4

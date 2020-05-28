@@ -1,17 +1,24 @@
 'use strict';
 
 /**
- * This rotation of array makes use of modulo arithmetic
+ * @description This rotation of array makes use of modulo arithmetic
  * and is based on whatever the circular array uses.
  * (Current Index + Number of Shifts) % Size.
+ *
  * Bt it uses an additional array to temporarily hold the arrangements.
  * So the space complexity is O(N) and the time complexity is O(N).
+ *
  * If stuff has to be re-copied back into the original array, then,
  * the time complexity would be O(N) + O(N).
  * @param {Array} arr
  * @param {Number} numberOfRotations
  */
 const rotateArrayByModuloDivision = (arr, numberOfRotations) => {
+    if (!arr.length) {
+        console.warn('Array is empty');
+        return;
+    }
+
     let tempArr = new Array(arr.length);
 
     arr.forEach((el, idx) => {
