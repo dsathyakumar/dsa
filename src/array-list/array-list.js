@@ -9,6 +9,8 @@ const {
 /**
  * Array inserts and Deletes require knowledge of array shifts / rotations
  * and which in turn require knowledge of array reversals.
+ * This implementation is based on the blog on Dynamic Arrays by InterviewCake
+ * and by videos of William Fiset and DaveFeinberg on youtube.
  */
 
 class ArrayList {
