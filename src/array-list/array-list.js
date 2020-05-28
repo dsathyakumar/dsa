@@ -78,6 +78,11 @@ class ArrayList {
         return ++this.lastIndex;
     }
 
+    /**
+     * Deletes an element at a specific index as long as the index is not
+     * greater than the lastIndex
+     * @param {Number} index
+     */
     delete(index) {
         if (this.isEmpty()) {
             console.warn(`Cannot do operation delete on empty list`);
@@ -103,6 +108,11 @@ class ArrayList {
         return temp;
     }
 
+    /**
+     * Inserts an element at a specific >=0 && <= lastIndex + 1
+     * @param {*} data
+     * @param {Number} index
+     */
     insert(data, index) {
         if (!data) {
             console.log('Data must not be empty!');
