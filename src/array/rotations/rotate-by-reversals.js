@@ -6,11 +6,15 @@ const {
 } = require('../reverse/index');
 
 /**
- * This program does reverse via the following:
- * - reverse the full array.
+ * NOTE: This assumes the whole array is available for rotation / shift and not a portion
+ * alone
+ * 
+ * This program does rotation/shift via the following process:
+ * - reverses the full array.
  * - have the array in 2 groups of (numberOfRotations), (arr.length - numberOfRotations)
  * - reverse the array group of (numberOfRotations)
  * - reverse the remaining group of (arr.length - numberOfRotations)
+ * By doing this, the required rotation is achieved.
  * @param {Array} arr
  * @param {Number} numberOfRotations
  */
