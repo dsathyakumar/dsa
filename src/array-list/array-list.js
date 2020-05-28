@@ -1,29 +1,10 @@
 'use strict';
 
 const {
-
-} = require('../array/rotations')
-
-const shouldResize = (capacity, lastIndex) => (lastIndex + 1 === capacity);
-
-const resize = (arr, lastIndex) => {
-    if (!shouldResize(arr.length, lastIndex)) {
-        return arr;
-    }
-
-    // create a new Array that is twice the size of the old array
-    const newArr = new Array(2 * arr.length);
-    newArr.fill(null);
-    Object.seal(newArr);
-
-    // copy elements from the old array at whatever indices they were in
-    // into the new Array
-    arr.forEach((el, idx) => {
-        newArr[idx] = el;
-    });
-
-    return newArr;
-};
+    shiftLeft,
+    shiftRight,
+    resizeIfFull
+} = require('./util');
 
 /**
  * Array inserts and Deletes require knowledge of array shifts / rotations
@@ -32,6 +13,10 @@ const resize = (arr, lastIndex) => {
 
 class ArrayList {
     constructor(capacity) {
+        if (typeof capacity === 'undefined' || typeof capacity !== 'number') {
+            throw new Error('Cannot instantiate without initial capcacity.');
+        }
+
         // creating a fixed size array
         this.arr = new Array(capacity);
         this.arr.fill(null);
@@ -47,7 +32,9 @@ class ArrayList {
             return;
         }
 
-        this.arr.forEach(el => console.log(el));
+        for (let indexCounter = 0; indexCounter <= (this.lastIndex); indexCounter++) {
+            console.log(this.arr[indexCounter]);
+        }
     }
 
     /**
@@ -60,6 +47,14 @@ class ArrayList {
             console.warn(`Cannot do operation shift on empty list`);
             return;
         }
+
+        let temp = this.arr[0];
+
+        shiftLeft(this, 0);
+
+        --this.lastIndex;
+
+        return temp;
     }
 
     /**
@@ -74,20 +69,65 @@ class ArrayList {
             return;
         }
 
-        this.arr = resizeIfFull();
+        resizeIfFull(this);
+
+        shiftRight(this, 0);
+
+        this.arr[0] = data;
+
+        return ++this.lastIndex;
     }
 
     delete(index) {
+        if (this.isEmpty()) {
+            console.warn(`Cannot do operation delete on empty list`);
+            return;
+        }
 
-    }
-
-    insert(index, data) {
         if (typeof index === 'undefined' || typeof index !== 'number') {
             console.warn(`Index must be specified as a number`);
             return;
         }
 
-        this.arr = resizeIfFull();
+        if (index > this.lastIndex) {
+            console.warn('Cannot delete beyound the lastIndex');
+            return;
+        }
+
+        let temp = this.arr[index];
+        
+        shiftLeft(this, index);
+
+        --this.lastIndex;
+
+        return temp;
+    }
+
+    insert(data, index) {
+        if (!data) {
+            console.log('Data must not be empty!');
+            return;
+        }
+
+        if (typeof index === 'undefined' || typeof index !== 'number') {
+            console.warn(`Index must be specified as a number`);
+            return;
+        }
+
+        // inserts can at max be done at the lastIndex or after the lastIndex
+        // in which case lastIndex + 1 (same as push)
+        if ((index > this.lastIndex + 1) || (index < 0)) {
+            console.warn('Cannot insert beyond last+1 or index < 0');
+            return;
+        }
+
+        resizeIfFull(this);
+
+        shiftRight(this, index);
+
+        this.arr[index] = data;
+
+        return ++this.lastIndex;
     }
 
     /**
@@ -103,7 +143,7 @@ class ArrayList {
         }
 
         const value = this.arr[this.lastIndex];
-        this.arr[--this.lastIndex] = null;
+        this.arr[this.lastIndex--] = null;
         return value;
     }
 
@@ -120,20 +160,26 @@ class ArrayList {
             return;
         }
 
-        this.arr = resizeIfFull();
+        resizeIfFull(this);
 
         this.arr[++this.lastIndex] = data;
+
         return this.lastIndex;
     }
 
+    /**
+     * Returns the element at a specific index
+     * @param {Number} index
+     */
     get(index) {
-        if (index < 0 || index > (this.capacity() - 1)) {
-            console.warn(`Index out of bounds!`);
+        if (typeof index === 'undefined' || typeof index !== 'number') {
+            console.warn(`Index must be specified as a number`);
             return;
         }
 
-        if (typeof index === 'undefined' || typeof index !== 'number') {
-            console.warn(`Index must be specified as a number`);
+        // consumer should be accessing only slots that are filled
+        if (index < 0 || index > this.lastIndex) {
+            console.warn(`Index out of bounds!`);
             return;
         }
 
@@ -149,7 +195,8 @@ class ArrayList {
 
     /**
      * This is the index that indicates how much of the array is filled.
-     * The last filled index
+     * The last filled index. If the lastIndex === capacity() - 1,
+     * then the array is FULL.
      */
     size() {
         return (this.lastIndex);
