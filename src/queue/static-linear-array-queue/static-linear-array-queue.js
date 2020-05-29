@@ -39,6 +39,7 @@ class StaticLinearArrayQueue {
     }
     
     isFull() {
+        // Here a full Q means that the rear pointer has reached the (arr.length - 1).
         // because this is a static array, there is no wrap around of elements nor is
         // there dynamic resizing. So when rear reaches the lastIndex, its automatically
         // assumed to be full, as nothing more can be enqueued.
@@ -87,10 +88,11 @@ class StaticLinearArrayQueue {
 
         this.arr[this.front++] = null; // force set it to NULL here.
         
-        // when the last element has been dequeued, while the Q is full.
-        // Here a full Q means that the rear pointer has reached the (arr.length - 1)
-        // it does not mean that the Q is filled fully.
-        if ((this.front > this.rear) && this.isFull()) {
+        // when the last element has been dequeued, while the Q is full.        
+        // it does not mean that the Q is filled fully. Bt at this point, when
+        // newer elements are inserted, they can very well start at the beginnning
+        // rather than move them to this.read+1 and waste space in front.
+        if ((this.front > this.rear)) {
             this.front = this.rear = -1;
         }
 
