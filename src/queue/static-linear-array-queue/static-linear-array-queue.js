@@ -10,6 +10,9 @@
  * This is a Linear Queue, built out of a static array. There is no resizing involved.
  *
  * This is the most basic implementation of the Queue - FIFO ADT.
+ *
+ * While there may be empty slots in the array, the Q is always between front and rear
+ * pointers (including both of them)
  */
 class StaticLinearArrayQueue {
     constructor(size) {
