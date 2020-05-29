@@ -42,6 +42,9 @@ console.log(slaq.size());
 console.log(slaq.front);
 console.log(slaq.rear);
 
+console.log('\n');
+slaq.peek()
+
 slaq.dequeue();
 
 console.log('\n');
