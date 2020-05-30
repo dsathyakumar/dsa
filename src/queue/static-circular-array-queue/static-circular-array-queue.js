@@ -33,7 +33,7 @@ class StaticCircularArrayQueue {
         this.arr.fill(null);
         Object.seal(this.arr);
 
-        // for a linear static Q, the starting point of both these pointers will be -1
+        // for a circular static Q, the starting point of both these pointers will be -1
         // indicating an empty queue. Both these pointers point to array indexes and are
         // of type Number
         this.rear = -1;
