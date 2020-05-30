@@ -38,8 +38,9 @@ class ArrayList {
 
         // to start with there are no elements (the array is pre-filled with NULL)
         // The lastIndex is how we check to see how much of the Static Array is actually filled.
-        // while the capacity is used to create a fixed size array, how much of it is filled,
-        // will be decided by the lastIndex
+        // while the capacity is used to create a fixed size array, how much of it is actually filled,
+        // will be decided by the lastIndex. When the lastIndex approaches the capacity, we decide
+        // that the static array is nearly filled and nearing capacity & needs to be resized.
         this.lastIndex = -1;
     }
   
