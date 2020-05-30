@@ -5,7 +5,7 @@ const {
 } = require('./node');
 const {
     DynamicLinearLLQueue
-} = require('./dynamic-linear-linkedlist-queue');
+} = require('./dynamic-linear-sll-queue');
 
 const dlllq = new DynamicLinearLLQueue();
 
