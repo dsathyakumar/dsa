@@ -1,5 +1,27 @@
 'use strict';
 
+/**
+ * The Stack is usually implemented by visualizing an array vertically
+ * setup, with the 0th index at the bottom.
+ *
+ * The 1st element is inserted into the 0th element & this will be the Last
+ * element to be popped out of the stack. The stack thus follows the LIFO principle.
+ *
+ * Newer elements are pushed into the stack, from the top and they fill up the 1st, 2nd
+ * 3rd.. (n-1)th index and so on. When a .pop() is done, the top most element in the stack,
+ * for eh) the (n-1)th element will be popped. The top pointer always points to the top element
+ * of the stack, which will 1st be popped out.
+ *
+ * As more elements are pushed, the top gets incremented.
+ * As more elements are popped, the top gets decremented.
+ *
+ * Also, given that the 0th index is at the bottom, the upper indexes of the array at the top,
+ * resembles a JS array with a PUSH operation (insert at the end) and POP operation (delete at the end).
+ *
+ * Bt, given an empty array with 3 indexes and doing a [].push(), the JS array would not
+ * insert into the 1st empty position from the back, instead would just append at the back.
+ * Therefore, a traditional JS .push operation cannot be used to mirror the stack push().
+ */
 class Stack {
     constructor(size) {
         if (size <= 0) {
