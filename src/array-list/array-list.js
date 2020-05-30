@@ -9,22 +9,37 @@ const {
 /**
  * Array inserts and Deletes require knowledge of array shifts / rotations
  * and which in turn require knowledge of array reversals.
+ *
  * This implementation is based on the blog on Dynamic Arrays by InterviewCake
  * and by videos of William Fiset and DaveFeinberg on youtube.
+ *
+ * The Amortized time complexity of an insert (with a resize) is o(1).
+ * Check out Nerd's youtube video regarding this for Amortized time complexity
+ * calculation of ArrayList resize.
  */
-
 class ArrayList {
     constructor(capacity) {
         if (typeof capacity === 'undefined' || typeof capacity !== 'number') {
             throw new Error('Cannot instantiate without initial capcacity.');
         }
 
-        // creating a fixed size array
+        // creating a fixed size array with the initial `capacity`
         this.arr = new Array(capacity);
-        this.arr.fill(null); // in JS, this one step is an extra cost we incur to create Static arrays
+
+        // in JS, this one step is an extra cost we incur to create Static arrays
+        // Its pre-filled with NULL so as to create space. Else since the array is sealed
+        // with `empty`, it does not let assign values to indexes. By doing this, we can
+        // assign values to array indexes. However, the traditional JS .push() and .pop()
+        // operations cannot be performed (as the object is sealed) and a .push() does not
+        // fill up the non-empty position from the back, but rather appends the new element
+        // to the back.
+        this.arr.fill(null);
         Object.seal(this.arr);
 
-        // to start with there are no elements
+        // to start with there are no elements (the array is pre-filled with NULL)
+        // The lastIndex is how we check to see how much of the Static Array is actually filled.
+        // while the capacity is used to create a fixed size array, how much of it is filled,
+        // will be decided by the lastIndex
         this.lastIndex = -1;
     }
   
@@ -232,3 +247,4 @@ class ArrayList {
 }
 
 exports.ArrayList = ArrayList;
+exports.DynamicArray = ArrayList;
