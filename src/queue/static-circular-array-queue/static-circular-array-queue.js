@@ -119,7 +119,7 @@ class StaticCircularArrayQueue {
         if (this.front === this.rear) {
             this.front = -1;
             this.rear = -1;
-            return;
+            return tempVal;
         }
 
         // if this was not the last element & the Q was not empty, then bump the front pointer
@@ -147,9 +147,14 @@ class StaticCircularArrayQueue {
             return;
         }
 
-        for(let qCounter = this.front; qCounter <= this.rear; qCounter = ((this.front + 1) % this.capacity())) {
-            console.log(this.arr[qCounter]);
-        }
+        let idx = this.front;
+
+        do {
+            if (typeof this.arr[idx] !== 'undefined' && this.arr[idx] !== null) {
+                console.log(this.arr[idx]);
+            }
+            idx = (idx + 1) % this.capacity();
+        } while(idx !== this.front);
     }
 }
 
