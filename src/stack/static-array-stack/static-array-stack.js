@@ -49,7 +49,7 @@ class StaticArrayStack {
     }
 
     size() {
-        return this.top;
+        return (this.top === -1) ? 0 : (this.top + 1);
     }
 
     push(data) {
@@ -60,6 +60,8 @@ class StaticArrayStack {
 
         this.top++;
         this.stack[this.top] = data;
+
+        return this.size();
     }
 
     pop() {
@@ -124,6 +126,10 @@ class StaticArrayStack {
 
     isEmpty() {
         return (this.top === -1);
+    }
+
+    capacity() {
+        return this.stack.length;
     }
 }
 
