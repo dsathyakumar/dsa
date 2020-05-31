@@ -10,6 +10,11 @@ const resize = (dynamicCircularArrayQueue) => {
         // else, proceed to resize the array at double the current capacity
         let newArr = new Array(2 * (dynamicCircularArrayQueue.capacity()));
 
+        // the following 2 lines are unwanted operational cost of making the
+        // array, static, fixed size. Such arrays are generally not possible in JS
+        newArr.fill(null);
+        Object.seal(newArr);
+
         // the old arr => dynamicCircularArrayQueue.arr
         // The resize is being done because it did not have space.
         // Now, we will unfurl the circular wrap and fit it linearly into the new array.
@@ -19,9 +24,9 @@ const resize = (dynamicCircularArrayQueue) => {
             front = dynamicCircularArrayQueue.front;
         
         do {
-            newArr[idx++] = front;
+            newArr[idx++] = dynamicCircularArrayQueue.arr[front];
             front = (front + 1) % dynamicCircularArrayQueue.capacity();
-        } while (idx !== front);
+        } while (front !== dynamicCircularArrayQueue.front);
 
         dynamicCircularArrayQueue.front = 0;
         dynamicCircularArrayQueue.rear = (dynamicCircularArrayQueue.capacity() - 1);
@@ -87,11 +92,13 @@ class DynamicCircularArrayQueue {
 
     enqueue(data) {
         if (typeof data === 'undefined' || data === null) {
-            console.warn('Data cannot be empty for dequeue');
+            console.warn('Data cannot be empty for enqueue');
             return;
         }
 
-        // will do a resize if FULL
+        // will do a resize if already FULL
+        // if the current operation still has 1 index left, it wont resize.
+        // in such cases, the resizes will be done as part of the next enqueue operation.
         resize(this);
 
         // increment the front pointer from -1 to 0
@@ -135,6 +142,31 @@ class DynamicCircularArrayQueue {
         return this.arr[this.front];
     }
 
+    find(data) { // very basic linear search.
+        if (this.isEmpty()) {
+            console.warn(`Q is empty! Nothing to find`);
+            return;
+        }
+
+        if (typeof data === 'undefined' || data === null) {
+            console.warn(`Data to search cannot be empty!`);
+            return;
+        }
+
+        let idx = -1,
+            front = this.front;
+
+        do { // will execute atleast one time (solving for 1 element in Q case)
+            if (data === this.arr[front]) {
+                idx = front;
+                break;
+            }
+            front = (front + 1) % this.capacity();
+        } while(front !== this.front);
+
+        return idx;
+    }
+
     print() {
         if (this.isEmpty()) {
             console.warn(`Q is empty! Nothing to print`);
@@ -145,7 +177,7 @@ class DynamicCircularArrayQueue {
             currentElement;
 
         do {
-            currentElement = this.arr[idx++];
+            currentElement = this.arr[idx];
 
             if ((currentElement !== null) && (typeof currentElement !== 'undefined')) {
                 console.log(currentElement);
