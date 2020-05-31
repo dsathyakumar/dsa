@@ -22,7 +22,7 @@
  * insert into the 1st empty position from the back, instead would just append at the back.
  * Therefore, a traditional JS .push operation cannot be used to mirror the stack push().
  */
-class Stack {
+class StaticArrayStack {
     constructor(size) {
         if (size <= 0) {
             throw new Error(`Stack cannot be defined with zero or negative size`);
@@ -127,4 +127,4 @@ class Stack {
     }
 }
 
-exports.Stack = Stack;
+exports.StaticArrayStack = StaticArrayStack;
