@@ -12,7 +12,7 @@ const {
  * any overflows as there is no fixed size. So an isFull() function no longer
  * makes sense to check on uppper bounds.
  */
-class LinkedStack {
+class DynamicSinglyLinkedListStack {
     constructor() {
         this.length = 0; // > length of the Stack
         this.top = null; // > The topNode which holds a ref to the 1st element of the LL
@@ -128,4 +128,4 @@ class LinkedStack {
     }
 }
 
-exports.LinkedStack = LinkedStack;
+exports.DynamicSinglyLinkedListStack = DynamicSinglyLinkedListStack;
