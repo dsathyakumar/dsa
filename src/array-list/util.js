@@ -66,52 +66,6 @@ const shrinkIfSparse = (arraylist) => {
     return;
 };
 
-// const resize = arraylist => {
-//     // if the list is empty, nothing needs to be done. Return
-//     if (arraylist.isEmpty()) {
-//         return;
-//     }
-
-//     const currentCapacity = arraylist.capacity();
-//     const occupancyFactor = (arraylist.size() / currentCapacity);
-//     const shouldExpand = arraylist.isFull();
-//     const shouldShrink = ((occupancyFactor > 0) && (occupancyFactor <= 0.25));
-
-//     // if there is neither an expansion or shrink, just return
-//     if (!shouldShrink && !shouldShrink) {
-//         return;
-//     }
-
-//     // initialize an empty variable to hold the new Array
-//     let newArr;
-
-//     // double the capacity for an expansion
-//     // 1/2 the capacity for a shrink, if the occupancy factor falls below 0.25
-//     if (shouldExpand) {
-//         newArr = new Array(2 * currentCapacity);
-//     } else if (shouldShrink) {
-//         newArr = new Array(Math.ceil(currentCapacity / 2));
-//     }
-
-//     // when there is an expansion, the newArr's lastIndex will definitely be more than current
-//     // array's last index. So its safe to keep the limit as current array's capacity.
-//     // Bt, when there is a shrink, the newArr's lastIndex will be lesser than current
-//     // array's lastIndex. So the limit will have to be the newArr's lastIndex, to avoid a index
-//     // out of bounds.
-//     const limit = (shouldExpand) ? currentCapacity : newArr.length;
-
-//     // copy over elements from old array to the new array
-//     for (let idx = 0; idx < limit; idx++) {
-//         newArr[idx] = arraylist.arr[idx];
-//     }
-
-//     // reset references
-//     arraylist.arr = newArr;
-//     arraylist.lastIndex = arraylist.lastIndex;
-
-//     return;
-// };
-
 // used for delete and shift operations
 // For eg) if we have to shift Left by 1, from index =1 to index = 0
 // For eg) the index = 0 th element was deleted. If lastIndex = 3
