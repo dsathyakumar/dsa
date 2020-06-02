@@ -1,5 +1,15 @@
 'use strict';
 
+// Note that both expandIfFull and shrinkIfSparse were in one method before.
+// By usual practice, the array would be expanded before an insert
+// & shrunk after a delete (if it satisfied the conditions). But having both the logic
+// in one method caused issues. For eg) for a list of size 4, when a 2nd insert was attempted,
+// after the 1st insert, the resize was called before the 2nd insert & the occupancy factor was = 0.25,
+// making it a suitable candidate for a shrink which was incorrect.
+// So the expandIfFull method is called for insert, push and unshift and will do an expand
+// only if the internal array was full. Amortized cost in this way is O(1).
+// In the same way, shrinkIfSparse is called for delete, pop and shift and will do a shrink
+// only if the internal array had a occupancy of >-=0 and <=0.25 (its 1/4th full and so can be halved)
 const expandIfFull = (arraylist) => {
     // if the list is empty, nothing needs to be done. Return
     if (arraylist.isEmpty()) {
