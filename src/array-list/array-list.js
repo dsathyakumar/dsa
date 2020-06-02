@@ -3,7 +3,8 @@
 const {
     shiftLeft,
     shiftRight,
-    resizeIfFull
+    expandIfFull,
+    shrinkIfSparse
 } = require('./util');
 
 /**
@@ -20,7 +21,7 @@ const {
 class ArrayList {
     constructor(capacity) {
         if (typeof capacity === 'undefined' || typeof capacity !== 'number') {
-            throw new Error('Cannot instantiate without initial capcacity.');
+            throw new Error('Cannot instantiate without initial capcacity. Must be a positive non-zero number');
         }
 
         // creating a fixed size array with the initial `capacity`
@@ -72,33 +73,38 @@ class ArrayList {
 
         --this.lastIndex;
 
+        shrinkIfSparse(this);
+
         return temp;
     }
 
     /**
      * Does the same operation as Array.prototype.unshift
      * Adds a new element to the 0th index of the array
-     * and right shifts all elements by 1
+     * and right shifts all elements by 1 (done before adding the new element)
      * @param {*} data 
      */
     unshift(data) {
-        if (!data) {
+        if (typeof data === 'undefined' || data === null) {
             console.warn(`Data cannot be empty`);
             return;
         }
 
-        resizeIfFull(this);
+        expandIfFull(this);
 
         shiftRight(this, 0);
 
         this.arr[0] = data;
 
-        return ++this.lastIndex;
+        ++this.lastIndex;
+
+        return this.size();
     }
 
     /**
      * Deletes an element at a specific index as long as the index is not
-     * greater than the lastIndex
+     * greater than the lastIndex. The other elements in indexes after it
+     * are pulled up
      * @param {Number} index
      */
     delete(index) {
@@ -123,16 +129,19 @@ class ArrayList {
 
         --this.lastIndex;
 
+        shrinkIfSparse(this);
+
         return temp;
     }
 
     /**
-     * Inserts an element at a specific >=0 && <= lastIndex + 1
+     * Inserts an element at a specific >=0 && <= lastIndex + 1.
+     * The elements from the index are pushed down.
      * @param {*} data
      * @param {Number} index
      */
     insert(data, index) {
-        if (!data) {
+        if (typeof data === 'undefined' || data === null) {
             console.log('Data must not be empty!');
             return;
         }
@@ -149,13 +158,15 @@ class ArrayList {
             return;
         }
 
-        resizeIfFull(this);
+        expandIfFull(this);
 
         shiftRight(this, index);
 
         this.arr[index] = data;
 
-        return ++this.lastIndex;
+        ++this.lastIndex;
+
+        return this.size();
     }
 
     /**
@@ -166,12 +177,16 @@ class ArrayList {
      */
     pop() {
         if (this.isEmpty()) {
-            console.warn(`Nothing to pop.`);
+            console.warn(`Nothing to pop. List is empty!`);
             return;
         }
 
+        // get the value from current lastIndex & return it.
         const value = this.arr[this.lastIndex];
         this.arr[this.lastIndex--] = null;
+
+        shrinkIfSparse(this);
+
         return value;
     }
 
@@ -183,16 +198,16 @@ class ArrayList {
      * @param {*} data
      */
     push(data) {
-        if (!data) {
+        if (typeof data === 'undefined' || data === null) {
             console.warn(`Data cannot be empty`);
             return;
         }
 
-        resizeIfFull(this);
+        expandIfFull(this);
 
         this.arr[++this.lastIndex] = data;
 
-        return this.lastIndex;
+        return this.size();
     }
 
     /**
@@ -222,12 +237,11 @@ class ArrayList {
     }
 
     /**
-     * This is the index that indicates how much of the array is filled.
-     * The last filled index. If the lastIndex === capacity() - 1,
-     * then the array is FULL.
+     * This indicates how much of the array is filled.
+     * Its value is lastIndex + 1
      */
     size() {
-        return (this.lastIndex);
+        return ((this.isEmpty()) ? 0 : (this.lastIndex + 1));
     }
 
     /**
@@ -236,14 +250,14 @@ class ArrayList {
      * will be filled values. The best bet here is to check the lastIndex
      */
     isEmpty() {
-        return (this.size() === -1);
+        return (this.lastIndex === -1);
     }
 
     /**
      * The Last index should equal arr.length-1
      */
     isFull() {
-        return (this.size() === (this.capacity() - 1));
+        return (this.lastIndex === (this.capacity() - 1));
     }
 }
 
