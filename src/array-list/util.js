@@ -10,6 +10,13 @@
 // only if the internal array was full. Amortized cost in this way is O(1).
 // In the same way, shrinkIfSparse is called for delete, pop and shift and will do a shrink
 // only if the internal array had a occupancy of >-=0 and <=0.25 (its 1/4th full and so can be halved)
+
+/**
+ * Doubles the ArrayList in size when max capacity is reached.
+ * This is checked before every insert / push / unshift operation
+ * Per Amortized Analysis, this is O(1)
+ * @param {ArrayList} arraylist
+ */
 const expandIfFull = (arraylist) => {
     // if the list is empty, nothing needs to be done. Return
     if (arraylist.isEmpty()) {
@@ -45,6 +52,12 @@ const expandIfFull = (arraylist) => {
     return;
 };
 
+/**
+ * Shrinks the Array by half when the occupancy factor is <= 0.25
+ * This is checked before every delete / pop / shift operation.
+ * Per Amortized Analysis this is O(1)
+ * @param {ArrayList} arraylist
+ */
 const shrinkIfSparse = (arraylist) => {
     const currentCapacity = arraylist.capacity();
     const occupancyFactor = (arraylist.size() / currentCapacity);
