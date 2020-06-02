@@ -259,6 +259,27 @@ class ArrayList {
     isFull() {
         return (this.lastIndex === (this.capacity() - 1));
     }
+
+    /**
+     * Determines if a value is present in alist
+     * @param {*} data
+     */
+    contains(data) {
+        if (this.isEmpty()) {
+            console.warn('List is empty. Nothing to search');
+            return;
+        }
+
+        let index = -1;
+
+        for (let idx = 0; idx <= this.lastIndex; idx++) {
+            if (this.arr[idx] === data) {
+                index = idx;
+            }
+        }
+
+        return index;
+    }
 }
 
 exports.ArrayList = ArrayList;

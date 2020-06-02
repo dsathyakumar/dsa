@@ -38,5 +38,7 @@ console.log(dynamicArr_1.get(3));
 console.log(dynamicArr_1.get(4));
 console.log(dynamicArr_1.get(5));
 
+console.log('\n');
+console.log(dynamicArr_1.contains('EBAY'));
 
 const dynamicArr_2 = new ArrayList(2);
