@@ -1,85 +1,9 @@
 'use strict';
-/**
- * Refer:
- * https://www2.cs.sfu.ca/CourseCentral/225/ahadjkho/lecture-notes/dynamic-arrays-link_list.pdf
- * http://www.cs.toronto.edu/~ylzhang/csc263w15/slides/lec07-amortization.pdf
- * https://www.youtube.com/watch?v=T7W5E-5mljc
- * @param {DynamicCircularArrayDeque} dynamicCircularArrayDeque 
- */
-const resize = (dynamicCircularArrayDeque) => {
-    // it should not compute an empty Q has having a 0 occupy factor
-    if (dynamicCircularArrayDeque.isEmpty()) {
-        return;
-    }
 
-    // current occupancy factor of the array.
-    const occupiedFactor = (dynamicCircularArrayDeque.size() / dynamicCircularArrayDeque.capacity());
-
-    // the array will be doubled, when the current array size === capacity, dictated by isFull
-    const shouldDouble = dynamicCircularArrayDeque.isFull();
-
-    // the current array will be shrunk in size to release mmemory if its occupancy factor falls <= 0.25
-    // in that case, the array will be halved in size
-    const shouldShrink = (occupiedFactor > 0 && occupiedFactor <= 0.25);
-
-    // if neither shrink nor double, return
-    if (!shouldShrink && !shouldDouble) {
-        return;
-    }
-
-    // else, proceed to shrink / double the current array
-    let newArr;
-
-    // The following new size determination is based on Dynamic Array Amortized Analysis.
-    // if the array needs to be expanded, its size is doubled.
-    // if the array needs to be shrunk, the floor of half operation is done.
-    // This is because doubling always results in whole number (N= odd or N=even)
-    // Halving can result in a non-whole number (when N=odd). So the ceil is taken.
-    if (shouldDouble) {
-        newArr = new Array(2 * dynamicCircularArrayDeque.capacity());
-    } else if (shouldShrink) {
-        newArr = new Array(Math.ceil(dynamicCircularArrayDeque.capacity() / 2));
-    }
-
-    // in JS, this one step is an extra cost we incur to create Static arrays
-    // Its pre-filled with NULL so as to create space. Else since the array is sealed
-    // with `empty`, it does not let assign values to indexes. By doing this, we can
-    // assign values to array indexes. However, the traditional JS .push() and .pop()
-    // operations cannot be performed (as the object is sealed) and a .push() does not
-    // fill up the non-empty position from the back, but rather appends the new element
-    // to the back.
-    newArr.fill(null);
-    Object.seal(newArr);
-
-    // copy elements of old array (in the same Q order) from front to rear
-    let idx = 0,
-        front = dynamicCircularArrayDeque.front;
-
-    do { // executes atleast once for a single element present
-        newArr[idx++] = dynamicCircularArrayDeque.arr[front];
-        front = (front + 1) % dynamicCircularArrayDeque.capacity();
-    } while (
-        (dynamicCircularArrayDeque.front !== front)
-        &&
-        (front <= (newArr.length - 1)) // this extra condition here is for array shrink cases
-    );
-
-    // if doubling, the lastIndex / rear will point to old array's last index
-    // if shrinking, then the lastIndex / rear will point to whatever the old array's filled
-    // element index was, in that case, indicated by size-1
-    if (shouldDouble) {
-        dynamicCircularArrayDeque.rear = (dynamicCircularArrayDeque.capacity() - 1);
-    } else if (shouldShrink) {
-        dynamicCircularArrayDeque.rear = (dynamicCircularArrayDeque.size() - 1);
-    }
-
-    // whatever be the old array front, its now un-wrapped to be fit into a new array.
-    // so it re-starts with index 0 (Expand or shrink, both cases)
-    dynamicCircularArrayDeque.front = 0;
-
-    // reasssign the new array to .arr, so that the old is GC'ed
-    dynamicCircularArrayDeque.arr = newArr;
-};
+const {
+    expandIfFull,
+    shrinkIfSparse
+} = require('./util');
 
 class DynamicCircularArrayDeque {
     constructor(initialCapacity) {
@@ -210,7 +134,7 @@ class DynamicCircularArrayDeque {
         }
 
         // b4 enqueueing, resize if needed (assuming its expanding here)
-        resize(this);
+        expandIfFull(this);
 
         if (this.isEmpty()) {
             this.front = 0;
@@ -236,7 +160,7 @@ class DynamicCircularArrayDeque {
         }
 
         // b4 enqueueing, resize if needed (assuming its expanding here)
-        resize(this);
+        expandIfFull(this);
 
         if (this.isEmpty()) {
             this.front = 0;
@@ -275,7 +199,7 @@ class DynamicCircularArrayDeque {
         }
 
         // b4 dequeueing, resize if needed (assuming its shrinking here)
-        resize(this);
+        shrinkIfSparse(this);
 
         return dequeuedElement;
     }
@@ -306,7 +230,7 @@ class DynamicCircularArrayDeque {
         }
 
         // b4 dequeueing, resize if needed (assuming its shrinking here)
-        resize(this);
+        shrinkIfSparse(this);
 
         return dequeuedElement;
     }
