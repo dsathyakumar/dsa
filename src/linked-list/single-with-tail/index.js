@@ -121,3 +121,16 @@ console.log(sllwt.lastIndex());
 
 console.log('\n');
 sllwt.display();
+
+sllwt.insert('Uber');
+sllwt.insert('Lyft');
+sllwt.insert('Ola');
+sllwt.insert('Waymo');
+
+console.log('\n');
+sllwt.display();
+
+sllwt.recursiveReverse();
+
+console.log('\n');
+sllwt.display();

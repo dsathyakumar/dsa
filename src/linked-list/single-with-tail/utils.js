@@ -145,3 +145,24 @@ exports.deleteAtIndex = (sll, index) => {
 
     return deletedVal;
 };
+
+// in this recursive reverse, we always return the reversed head in the call
+// this reversedHead bubbles up from the bottom of the recursion stack and finally gets returned.
+exports.rReverse = node => {
+    if (node.next === null) {
+        return node;
+    }
+
+    // if this call returns the lastnode or the tail,
+    // then the `node` in this call is the previous lastNode
+    const reversedHead = this.rReverse(node.next);
+
+    // then (node.next).next will be tail.next
+    // so this sets tail.next to be equal to currentNode
+    node.next.next = node;
+
+    // sets the currentNode's next to be NULL (this will be filled by subsequent calls)
+    node.next = null;
+
+    return reversedHead;
+};

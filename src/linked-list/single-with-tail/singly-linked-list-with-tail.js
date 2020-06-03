@@ -9,7 +9,8 @@ const {
     insertAtIndex,
     deleteFirst,
     deleteLast,
-    deleteAtIndex
+    deleteAtIndex,
+    rReverse
 } = require('./utils');
 
 class SinglyLinkedListWithTail {
@@ -421,6 +422,19 @@ class SinglyLinkedListWithTail {
             console.warn(`List is empty! Nothing to recursively reverse`);
             return;
         }
+
+        if ((this.head === this.tail) && (this.size() === 1)) {
+            console.warn(`Only one element present. Nothing to reverse`);
+            return;
+        }
+
+        this.tail = this.head;
+
+        this.head = rReverse(this.head);
+        
+        this.tail.next = null;
+
+        return;
     }
 }
 
