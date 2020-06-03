@@ -49,6 +49,9 @@ class SinglyLinkedListWithTail {
         while(currentNode) {
             console.log(currentNode.data);
 
+            // if the currentNode is the tail, break away as the value is already printed.
+            // since there is the tail, there is no need to get the next which would be NULL
+            // and then check and break off.
             if (currentNode === this.tail) {
                 break;
             }
@@ -59,6 +62,7 @@ class SinglyLinkedListWithTail {
         return;
     }
 
+    // modifies the data at a specified index
     modify(data, index) {
         // when list is empty
         if (this.isEmpty()) {
@@ -85,6 +89,8 @@ class SinglyLinkedListWithTail {
             return;
         }
 
+        // start from head to tail (forward iteration)
+        // starting index is 0, incremented at the end of every loop execution
         let currentNode = this.head,
             idx = 0;
 
@@ -108,6 +114,7 @@ class SinglyLinkedListWithTail {
         return;
     }
 
+    // checks if a value is present accross nodes and modifies it.
     updateAll(oldData, newData) {
         // if list is empty, return
         if (this.isEmpty()) {
@@ -131,6 +138,7 @@ class SinglyLinkedListWithTail {
 
         while(currentNode) {
             // if olddata matches, then update its data prop with newData
+            // dont break away here as there could be other nodes with the matching data
             if (currentNode.data === oldData) {
                 currentNode.data = newData;
             }
@@ -155,6 +163,7 @@ class SinglyLinkedListWithTail {
             return;
         }
 
+        // begin from head to tail (forward iteration)
         let currentNode = this.head,
             nextNode;
 
@@ -175,6 +184,7 @@ class SinglyLinkedListWithTail {
             this.length--;
         }
 
+        // finally GC nextNode
         nextNode = undefined;
 
         return;
@@ -182,22 +192,22 @@ class SinglyLinkedListWithTail {
 
     // finds if an element is present in the list
     find(data) {
-        // check if data is empty!
-        if (typeof data === 'undefined' || data === null) {
-            console.warn(`Data cannot be empty!`);
-            return;
-        }
-
         // if the list is empty, return
         if (this.isEmpty()) {
             console.warn(`List is empty! Nothing to find`);
             return;
         }
 
-        let currentNode = this.head,
-            idx = -1;
+        // check if data is empty!
+        if (typeof data === 'undefined' || data === null) {
+            console.warn(`Data cannot be empty!`);
+            return;
+        }
 
-        // presence of tail pointer helps cut the loop by 1
+        let currentNode = this.head,
+            idx = -1; // > -1 indicates that the element is not available
+
+        // presence of tail pointer helps cut the loop check by 1
         while(currentNode) {
             idx++; // increment at start, to indicate 1st element
 
@@ -221,6 +231,12 @@ class SinglyLinkedListWithTail {
     }
 
     get(index) {
+        // if the list is empty, return
+        if (this.isEmpty()) {
+            console.warn(`List is empty! Nothing to get`);
+            return;
+        }
+
         // if index is not a number, return
         if (typeof index !== 'number') {
             console.warn('Index must be specified as a positive non-zero number');
@@ -231,12 +247,6 @@ class SinglyLinkedListWithTail {
         // upper bound is that index should not exceed current lastIndex
         if (index < 0 || index > this.lastIndex()) {
             console.warn('Index out of bounds!');
-            return;
-        }
-
-        // if the list is empty, return
-        if (this.isEmpty()) {
-            console.warn(`List is empty! Nothing to get`);
             return;
         }
 
@@ -264,6 +274,10 @@ class SinglyLinkedListWithTail {
         return value;
     }
 
+    // inserts data at a given index.
+    // allowed inserts are from index = 0 to index=length
+    // when index = length, that index is empty at the moment
+    // the last filled index is indicated by lastIndex
     insert(data, index) {
         // check if data is empty!
         if (typeof data === 'undefined' || data === null) {
@@ -286,7 +300,7 @@ class SinglyLinkedListWithTail {
         // nor can we insert at index > length.
         // insert at lastIndex means the current lastIndex moves after it.
         // insert at index=current lenth means an .append or .add operation.
-        // so there is no way we can insert at index greater than length as index = length
+        // so there is no way we can insert at index greater than length, as index = length
         // itself is currently empty.
         if (typeof index === 'number' && (index < 0 || index > this.length)) {
             console.warn('index is out of bounds. Specify a non-zero & <= length');
@@ -294,11 +308,12 @@ class SinglyLinkedListWithTail {
         }
 
         // at this point if index is present, its got to be a number, within the range.
-        if (index === 0 || this.isEmpty()) {
+        // insertFirst is used when index= 0 or the list is empty
+        if ((typeof index === 'number' && index === 0) || this.isEmpty()) {
             insertFirst(this, data);
-        } else if (index !== 0 && index < this.length) {
+        } else if ((typeof index === 'number') && (index !== 0) && (index < this.length)) { // for any index !== 0 and index < length
             insertAtIndex(this, data, index);
-        } else {
+        } else { // index = length (append or add operation) => append to end of the list
             insertLast(this, data);
         }
 
@@ -306,6 +321,7 @@ class SinglyLinkedListWithTail {
     }
 
     delete(index) {
+        // if list is empty, nothing to delete
         if (this.isEmpty()) {
             console.warn(`List is empty! Nothing to delete`);
             return;
@@ -327,12 +343,13 @@ class SinglyLinkedListWithTail {
 
         let deletedValue;
 
-        // when there is only 1 element present, do a deleteFirst
+        // when there is only 1 element present, do a deleteFirst (same as index = 0)
         if (this.length === 1 || index === 0) {
             deletedValue = deleteFirst(this);
-        } else if (index !== 0 && index !== this.lastIndex()) { // when index is not 0 & is neither the lastIndex
+        } else if (index !== 0 && index !== this.lastIndex()) {
+            // when index is not 0 & is neither the lastIndex (anything < lastIndex is ok)
             deletedValue = deleteAtIndex(this, index);
-        } else {
+        } else { // lastIndex deletion
             deletedValue = deleteLast(this);
         }
 
@@ -365,6 +382,37 @@ class SinglyLinkedListWithTail {
             console.warn(`List is empty! Nothing to reverse`);
             return;
         }
+
+        if ((this.head === this.tail) && (this.size() === 1)) {
+            console.warn(`Only one element present. Nothing to reverse`);
+            return;
+        }
+
+        let currentNode = this.head,
+            prevNode = null,
+            nextNode;
+        
+        // reset the tail to point to current head.
+        // This is because currentHead will be reversed.
+        this.tail = this.head;
+        
+        while(currentNode) {
+            // this means this is the lastNode in the list
+            if (currentNode.next === null) {
+                // lastNode becomes the headNode
+                currentNode = this.head;
+            }
+
+            // the next property of currentNode should point to prevNode
+            // set prevNode to be currentNode (currentNode becomes prevNode for nextNode)
+            nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+            nextNode = undefined;
+        }
+
+        return;
     }
 
     // recursively reverses the list

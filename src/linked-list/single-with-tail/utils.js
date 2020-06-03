@@ -19,6 +19,8 @@ exports.insertFirst = (sll, node) => {
 };
 
 // will not be executed for the case of index=0
+// in a normal SLL this is O(N)
+// but since there is a ref to tail, this is now O(1)
 exports.insertLast = (sll, node) => {
     // 1. current tails next must point to node.
     // 2. New node must be set as the tail
