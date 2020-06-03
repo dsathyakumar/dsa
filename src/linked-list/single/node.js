@@ -3,7 +3,7 @@
 /**
  * Every Node of the LinkedList
  */
-class Node {
+class SLLNode {
     constructor(data) {
         // the data associated with this node.
         this.data = data;
@@ -12,4 +12,4 @@ class Node {
     }
 }
 
-exports.Node = Node;
+exports.SLLNode = SLLNode;

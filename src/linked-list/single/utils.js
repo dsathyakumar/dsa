@@ -37,6 +37,8 @@ const insertFirst = (list, node) => {
     node.next = tempNode;
     tempNode = undefined;
     list.length++;
+
+    return;
 };
 
 /**
@@ -56,6 +58,8 @@ const insertLast = (list, node) => {
         }
         currentNode = currentNode.next;
     }
+
+    return;
 };
 
 /**
@@ -83,6 +87,8 @@ const insertAtIndex = (list, node, index) => {
         currentNode = currentNode.next;
         idx++;
     }
+
+    return;
 };
 
 /**
@@ -90,10 +96,13 @@ const insertAtIndex = (list, node, index) => {
  * @param {SinglyLinkedList} list 
  */
 const deleteFirst = list => {
+    let deletedValue;
     let tempNode = list.head;
     list.head = tempNode.next;
+    deletedValue = tempNode.data;
     tempNode = undefined;
     list.length--;
+    return deletedValue;
 };
 
 /**
@@ -101,12 +110,14 @@ const deleteFirst = list => {
  * @param {SinglyLinkedList} list 
  */
 const deleteLast = list => {
-    let currentNode = list.head;
-    let prevNode = null;
+    let currentNode = list.head,
+        prevNode = null,
+        deletedValue;
 
     while(currentNode) {
         // if currentNode's next points to NULL, this is the last Node
-        if (!currentNode.next) {
+        if (currentNode.next === null) {
+            deletedValue = currentNode.data;
             prevNode.next = null;
             currentNode = undefined;
             list.length--;
@@ -116,6 +127,8 @@ const deleteLast = list => {
         prevNode = currentNode;
         currentNode = currentNode.next;
     }
+
+    return deletedValue;
 };
 
 /**
@@ -127,7 +140,8 @@ const deleteAtIndex = (list, index) => {
     let idx = 0,
         currentNode = list.head,
         prevNode = null,
-        nextNode;
+        nextNode,
+        deletedValue;
     
     while(currentNode) {
         if (idx === index) {
@@ -141,6 +155,8 @@ const deleteAtIndex = (list, index) => {
         currentNode = currentNode.next;
         idx++;
     }
+
+    return deletedValue;
 };
 
 exports.rreverse = rreverse;
