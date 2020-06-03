@@ -65,19 +65,19 @@ exports.insertAtIndex = (sll, node, index) => {
 // performs delete at index = 0 or when the list has only 1 element left
 // that is, its used to delete the last element in the list (only left element)
 exports.deleteFirst = (sll) => {
-    let headNode = this.head;
+    let headNode = sll.head;
     let deletedVal = headNode.data;
 
     // 1. Head must point to current head's next
     // 2. Current head's next pointer must be set to null
     // 3. Decrement length
-    this.head = this.head.next;
+    sll.head = sll.head.next;
     headNode.next = null;
     sll.length--;
 
     // the last element (only left element in list was deleted, so reset the pointers)
-    if (this.head === null) {
-        this.tail = null;
+    if (sll.head === null) {
+        sll.tail = null;
     }
 
     return deletedVal;
@@ -85,13 +85,13 @@ exports.deleteFirst = (sll) => {
 
 // deletes elements at index=lastIndex or (length-1)
 exports.deleteLast = (sll) => {
-    let currentNode = this.head,
+    let currentNode = sll.head,
         deletedVal;
 
     while(currentNode) {
         // if the currentNode's next is the last Node.
         // then the next node is what must be deleted.
-        if (currentNode.next === this.tail) {
+        if (currentNode.next === sll.tail) {
             // get the dequeued value
             deletedVal = currentNode.next.data;
 
@@ -99,7 +99,7 @@ exports.deleteLast = (sll) => {
             // 2. Set the tail pointer to point to currentNode
             // 3. Decrement length
             currentNode.next = null;
-            this.tail = currentNode;
+            sll.tail = currentNode;
             sll.length--;
 
             break;

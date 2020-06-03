@@ -336,7 +336,7 @@ class SinglyLinkedListWithTail {
         // after this, if index is present, its a number
         // only for insert, we can insert at an index = length, which is current lastIndex + 1
         // for delete, the max we can delete is the current lastIndex
-        if ((typeof index === number) && (index < 0 || index > this.lastIndex())) {
+        if ((typeof index === 'number') && (index < 0 || index > this.lastIndex())) {
             console.warn('Index out of bounds!');
             return;
         }
@@ -344,9 +344,9 @@ class SinglyLinkedListWithTail {
         let deletedValue;
 
         // when there is only 1 element present, do a deleteFirst (same as index = 0)
-        if (this.length === 1 || index === 0) {
+        if (this.length === 1 || (typeof index === 'number' && index === 0)) {
             deletedValue = deleteFirst(this);
-        } else if (index !== 0 && index !== this.lastIndex()) {
+        } else if ((typeof index === 'number') && (index !== 0) && (index !== this.lastIndex())) {
             // when index is not 0 & is neither the lastIndex (anything < lastIndex is ok)
             deletedValue = deleteAtIndex(this, index);
         } else { // lastIndex deletion
@@ -400,7 +400,7 @@ class SinglyLinkedListWithTail {
             // this means this is the lastNode in the list
             if (currentNode.next === null) {
                 // lastNode becomes the headNode
-                currentNode = this.head;
+                this.head = currentNode;
             }
 
             // the next property of currentNode should point to prevNode
