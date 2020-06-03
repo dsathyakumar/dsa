@@ -1,27 +1,65 @@
 'use strict';
 
-// capacity is the internal arr length.
-// so (top + 1) means the lastIndex
-const shouldResize = (top, capacity) => (top + 1 === capacity);
-
-const resize = (dynamicStack) => {
-    if (dynamicStack instanceof DynamicArrayStack) {
-        if (!shouldResize(dynamicStack.top, dynamicStack.arr.length)) {
-            return;
-        }
-    
-        let tempArr = new Array(2 * dynamicStack.arr.length);
-
-        // in JS, this one step is an extra cost we incur to create Static arrays
-        tempArr.fill(null);
-        Object.seal(tempArr);
-    
-        for (let stackCounter = 0; stackCounter <= (dynamicStack.top); stackCounter++) {
-            tempArr[stackCounter] = dynamicStack.arr[stackCounter];
-        }
-    
-        dynamicStack.arr = tempArr;
+const expandIfFull = (dynamicArrayStack) => {
+    // no need to expand upon a first insert (just because the stack is empty)
+    if (dynamicArrayStack.isEmpty()) {
+        return;
     }
+
+    const currentCapacity = dynamicArrayStack.capacity();
+
+    // do nothing if not full.
+    if (!dynamicArrayStack.isFull()) {
+        return;
+    }
+
+    const newArr = new Array(2 * currentCapacity);
+
+    // in JS, this one step is an extra cost we incur to create Static arrays
+    newArr.fill(null);
+    Object.seal(newArr);
+
+    // even if the current array is smaller than newArr
+    // its current occupied limit is defined by top
+    for (let idx = 0; idx <= (dynamicArrayStack.top); idx++) {
+        newArr[idx] = dynamicArrayStack.arr[idx];
+    }
+
+    dynamicArrayStack.arr = newArr;
+
+    // no need to re-assign top pointer again.
+
+    return;
+};
+
+const shrinkIfSparse = (dynamicArrayStack) => {
+    // no need to shrink after last element has popped, because the occupancy factor
+    // will be 0
+    const currentCapacity = dynamicArrayStack.capacity();
+    const occupancyFactor = (dynamicArrayStack.size() / currentCapacity);
+    const shouldShrink = ((occupancyFactor > 0) && (occupancyFactor <= 0.25));
+
+    if (!shouldShrink) {
+        return;
+    }
+
+    const newArr = new Array(Math.ceil(currentCapacity / 2));
+
+    // in JS, this one step is an extra cost we incur to create Static arrays
+    newArr.fill(null);
+    Object.seal(newArr);
+
+    // even if the current array is larger than newArr
+    // its current occupied limit is defined by top
+    for (let idx = 0; idx <= (dynamicArrayStack.top); idx++) {
+        newArr[idx] = dynamicArrayStack.arr[idx];
+    }
+
+    dynamicArrayStack.arr = newArr;
+
+    // no need to re-assign top pointer again.
+
+    return;
 };
 
 class DynamicArrayStack {
@@ -52,13 +90,33 @@ class DynamicArrayStack {
         this.arr.fill(null);
         Object.seal(this.arr);
 
+        // seal the given instance
         Object.seal(this);
     }
 
+    // determines if the current internal array in the stack is empty
+    isEmpty() {
+        return (this.top === -1);
+    }
+
+    // determines if the current internal array is full
+    isFull() {
+        return (this.top === (this.capacity() - 1));
+    }
+
+    // returns the number of occupied elements in the stack
+    // top pointer here is similar to the lastIndex in a arrayList (dynamic array)
+    // it always indicates the index upto which the internal array is currently filled.
     size() {
         return (this.top + 1);
     }
 
+    // actual capacity of the current internal Array within the stack
+    capacity() {
+        return this.arr.length;
+    }
+
+    // prints top down (top element of the stack to the bottom of the stack)
     view() {
         if (this.isEmpty()) {
             console.warn(`The stack is empty. Nothing to print!`);
@@ -70,6 +128,8 @@ class DynamicArrayStack {
         }
     }
 
+    // determines if the data is present in the stack and returns the index.
+    // if not present, returns a -1
     find(data) {
         if (this.isEmpty()) {
             console.warn(`The stack is empty. Nothing to peek!`);
@@ -93,6 +153,7 @@ class DynamicArrayStack {
         return idx;
     }
 
+    // pushes a data to the top of the stack
     push(data) {
         if(typeof data === 'undefined' || data === null) {
             console.warn(`Data cannot be empty!`);
@@ -100,14 +161,17 @@ class DynamicArrayStack {
         }
 
         // no need to check for full here as this is a dynamic stack.
-        resize(this);
+        // the condition is self contained within the method and it determines if the
+        // internal array needs to be doubled (once its capacity is met)
+        expandIfFull(this);
 
         // increments and returns the top pointer. So we set into an incremented index.
         this.arr[++this.top] = data;
 
-        return this.top; // same as returning the length in case of a JS .push operation.
+        return this.size(); // same as returning the length in case of a JS .push operation.
     }
 
+    // pops the data from the top of the stack
     pop() {
         if (this.isEmpty()) {
             console.warn(`The stack is empty. Nothing to pop!`);
@@ -119,9 +183,14 @@ class DynamicArrayStack {
 
         // the current top index is set to NULL and top pointer is decremented.
         this.arr[this.top--] = null;
+
+        // will determine if the array has to be sized down if its too sparse
+        shrinkIfSparse(this);
+
         return poppedData;
     }
 
+    // peeks data at the top (returns the data pointed by the top pointer)
     peek() {
         if (this.isEmpty()) {
             console.warn(`The stack is empty. Nothing to peek!`);
@@ -129,10 +198,6 @@ class DynamicArrayStack {
         }
 
         return this.arr[this.top];
-    }
-
-    isEmpty() {
-        return (this.top === -1);
     }
 }
 
