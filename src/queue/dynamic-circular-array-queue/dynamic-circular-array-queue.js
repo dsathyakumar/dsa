@@ -1,38 +1,9 @@
 'use strict';
 
-const resize = (dynamicCircularArrayQueue) => {
-    if (dynamicCircularArrayQueue instanceof DynamicCircularArrayQueue) {
-        // if not full, return
-        if (!dynamicCircularArrayQueue.isFull()) {
-            return;
-        }
-
-        // else, proceed to resize the array at double the current capacity
-        let newArr = new Array(2 * (dynamicCircularArrayQueue.capacity()));
-
-        // the following 2 lines are unwanted operational cost of making the
-        // array, static, fixed size. Such arrays are generally not possible in JS
-        newArr.fill(null);
-        Object.seal(newArr);
-
-        // the old arr => dynamicCircularArrayQueue.arr
-        // The resize is being done because it did not have space.
-        // Now, we will unfurl the circular wrap and fit it linearly into the new array.
-        // In the new Array, the elements are filled from 0th index onwards unlike the old array
-        // the iteration starts from old array's FRONT, so that the order of elements is preserved
-        let idx = 0,
-            front = dynamicCircularArrayQueue.front;
-        
-        do {
-            newArr[idx++] = dynamicCircularArrayQueue.arr[front];
-            front = (front + 1) % dynamicCircularArrayQueue.capacity();
-        } while (front !== dynamicCircularArrayQueue.front);
-
-        dynamicCircularArrayQueue.front = 0;
-        dynamicCircularArrayQueue.rear = (dynamicCircularArrayQueue.capacity() - 1);
-        dynamicCircularArrayQueue.arr = newArr;
-    }
-};
+const {
+    expandIfFull,
+    shrinkIfSparse
+} = require('./util');
 
 /**
  * This is an implementation of circular Q using dynamic arrays.
@@ -99,7 +70,7 @@ class DynamicCircularArrayQueue {
         // will do a resize if already FULL
         // if the current operation still has 1 index left, it wont resize.
         // in such cases, the resizes will be done as part of the next enqueue operation.
-        resize(this);
+        expandIfFull(this);
 
         // increment the front pointer from -1 to 0
         if (this.isEmpty()) {
@@ -130,6 +101,10 @@ class DynamicCircularArrayQueue {
         }
 
         this.front = (this.front + 1) % this.capacity();
+
+        // will shrink the array by 1/2 if the occupancy is >0 but <= 0.25
+        shrinkIfSparse(this);
+
         return dequeuedValue;
     }
 
