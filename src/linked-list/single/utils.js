@@ -145,6 +145,7 @@ const deleteAtIndex = (list, index) => {
     
     while(currentNode) {
         if (idx === index) {
+            deletedValue = currentNode.data;
             nextNode = currentNode.next;
             prevNode.next = nextNode;
             currentNode = undefined;

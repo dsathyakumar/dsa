@@ -311,12 +311,12 @@ class SinglyLinkedList {
         // At this point, List is certainly not empty.
         // Check if its delete at 0th index / last index / in between
         if ((typeof index !== 'undefined' && index === 0) || this.length === 1) {
-            deleteFirst(this);
+            deletedValue = deleteFirst(this);
         } else if (typeof index !== 'undefined' && (index !== (this.length - 1))) {
             // at this point, its neither 0th nor last
-            deleteAtIndex(this, index);
+            deletedValue = deleteAtIndex(this, index);
         } else {
-            deleteLast(this);
+            deletedValue = deleteLast(this);
         }
 
         return deletedValue;
