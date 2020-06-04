@@ -8,7 +8,7 @@ const {
     deleteLast,
     deleteAtIndex,
     rreverse
-} = require('./util');
+} = require('./utils');
 
 const {
   Node
@@ -26,6 +26,10 @@ class DoublyLinkedList {
 
     isEmpty() {
         return (this.length === 0 && this.head === null);
+    }
+
+    size() {
+        return (this.length);
     }
 
     /**
@@ -78,10 +82,6 @@ class DoublyLinkedList {
         }
 
         return idx;
-    }
-
-    size() {
-        return this.length;
     }
 
     /**
