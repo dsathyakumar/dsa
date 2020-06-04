@@ -7,6 +7,7 @@ const cll = new CircularLinkedList();
 console.log('---------- SIZE + isEmpty ---------');
 console.log(cll.size());
 console.log(cll.isEmpty());
+console.log(cll.lastIndex());
 console.log('---------- SIZE + isEmpty ---------');
 
 console.log('\n');
@@ -34,17 +35,17 @@ console.log('--------------- Empty ops ------------');
 
 console.log('\n');
 
-cll.insert('PYPL'); // will be index = 0 as list is empty
+console.log(cll.insert('PYPL')); // will be index = 0 as list is empty
 // PYPL (tail)
-cll.insert('DOW', 0); // will be index = 0
+console.log(cll.insert('DOW', 0)); // will be index = 0
 // DOW -> PYPL(tail)
-cll.insert('GOOG'); // insert Last
+console.log(cll.insert('GOOG')); // insert Last
 // DOW -> PYPL -> GOOG (tail)
-cll.insert('FB'); // inserts to the last
+console.log(cll.insert('FB')); // inserts to the last
 // DOW -> PYPL -> GOOG -> FB (tail)
-cll.insert('AMZN', 2); // insert at an index
+console.log(cll.insert('AMZN', 2)); // insert at an index
 // DOW -> PYPL -> AMZN -> GOOG -> FB (tail)
-cll.insert('EBAY', 0); // insert at 0 again
+console.log(cll.insert('EBAY', 0)); // insert at 0 again
 // EBAY -> DOW -> PYPL -> AMZN -> GOOG -> FB (tail)
 
 console.log(cll.tail);
@@ -152,7 +153,7 @@ console.log('\n');
 cll.print();
 console.log('--------------- PRINT + SIZE + isEmpty ------------');
 
-cll.delete();
+console.log(cll.delete());
 
 console.log('\n');
 
@@ -165,7 +166,7 @@ console.log('\n');
 console.log(cll.tail);
 console.log('--------------- PRINT + SIZE + isEmpty ------------');
 
-cll.delete(2);
+console.log(cll.delete(2));
 
 console.log('\n');
 
@@ -178,7 +179,7 @@ console.log('\n');
 console.log(cll.tail);
 console.log('--------------- PRINT + SIZE + isEmpty ------------');
 
-cll.delete(0);
+console.log(cll.delete(0));
 
 console.log('\n');
 
@@ -191,8 +192,8 @@ console.log('\n');
 console.log(cll.tail);
 console.log('--------------- PRINT + SIZE + isEmpty ------------');
 
-cll.delete();
-cll.delete();
+console.log(cll.delete());
+console.log(cll.delete());
 
 console.log('\n');
 
@@ -205,7 +206,7 @@ console.log('\n');
 console.log(cll.tail);
 console.log('--------------- PRINT + SIZE + isEmpty ------------');
 
-cll.delete(0);
+console.log(cll.delete(0));
 
 console.log('\n');
 
@@ -244,9 +245,9 @@ console.log('--------------- Destroy single eleme ------------');
 
 console.log('\n');
 
-cll.insert('Vada Pav');
-cll.insert('Aloo Bonda');
-cll.insert('Samosa');
+console.log(cll.insert('Vada Pav'));
+console.log(cll.insert('Aloo Bonda'));
+console.log(cll.insert('Samosa'));
 
 console.log('\n');
 console.log('--------------- Insert 3 more ------------');
