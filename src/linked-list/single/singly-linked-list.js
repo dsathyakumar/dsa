@@ -8,7 +8,7 @@ const {
     deleteAtIndex,
     deleteLast,
     deleteFirst
-} = require('./util');
+} = require('./utils');
 
 const {
     SLLNode
