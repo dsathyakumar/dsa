@@ -1,5 +1,19 @@
 'use strict';
 
+const {
+    insertFirst,
+    insertAtIndex,
+    insertLast,
+    deleteFirst,
+    deleteAtIndex,
+    deleteLast,
+    rReverse
+} = require('./util');
+
+const {
+    CDLLNode
+} = require('./node');
+
 class CircularDoublyLinkedList {
     constructor() {
         this.length = 0;
