@@ -293,7 +293,7 @@ class DoublyLinkedListWithTail {
         if ((typeof index === 'number' && index === 0) || this.isEmpty()) {
             insertFirst(this, data);
         } else if ((typeof index === 'number' && (index > 0) && (index < this.size()))) {
-            insertAtIndex(this, data);
+            insertAtIndex(this, data, index);
         } else {
             insertLast(this, data);
         }
@@ -374,6 +374,7 @@ class DoublyLinkedListWithTail {
                 this.head = currentNode;
             }
 
+            prevNode = currentNode;
             currentNode = nextNode;
         }
 

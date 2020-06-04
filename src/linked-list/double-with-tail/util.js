@@ -2,19 +2,19 @@
 
 // insertion is O(1)
 exports.insertFirst = (dll, node) => {
-    // 1. Set Node's prev to be NULL
-    // 2. Set Node's next to be current head
-    // 3. Set current head's prev to be Node
-    // 4. Set head as Node
-    // 5. Increment length
-    node.prev = null;
-    node.next = dll.head;
-    dll.head.prev = node;
-    dll.head = node;
-
-    // if this insert is being done when empty, tail also points to the same node
-    if ((dll.size() === 0) && (dll.tail === null)) {
+    if (dll.isEmpty()) {
+        dll.head = node;
         dll.tail = node;
+    } else {
+        // 1. Set Node's prev to be NULL
+        // 2. Set Node's next to be current head
+        // 3. Set current head's prev to be Node
+        // 4. Set head as Node
+        // 5. Increment length
+        node.prev = null;
+        node.next = dll.head;
+        dll.head.prev = node;
+        dll.head = node;
     }
     
     dll.length++;
