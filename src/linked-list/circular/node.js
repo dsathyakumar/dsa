@@ -1,10 +1,10 @@
 'use strict';
 
-class Node {
+class CLLNode {
     constructor(data) {
         this.data = data;
         this.next = null;
     }
 }
 
-exports.Node = Node;
+exports.CLLNode = CLLNode;
