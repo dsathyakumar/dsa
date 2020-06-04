@@ -36,6 +36,11 @@ console.log('\n');
 dllwt.display();
 
 console.log('\n');
+console.log(dllwt.size());
+console.log(dllwt.lastIndex());
+console.log(dllwt.isEmpty());
+
+console.log('\n');
 console.log(dllwt.find('GOOG'));
 console.log(dllwt.find('TSLA'));
 console.log(dllwt.get(0));
@@ -51,3 +56,46 @@ dllwt.recursiveReverse();
 
 console.log('\n');
 dllwt.display();
+
+console.log('\n');
+dllwt.updateAll('AMZN', 'amazon');
+dllwt.modify(0, 'microsoft');
+
+console.log('\n');
+dllwt.display();
+
+console.log('\n');
+console.log(dllwt.delete());
+console.log(dllwt.delete(2));
+console.log(dllwt.delete(0));
+console.log(dllwt.delete(2));
+
+console.log('\n');
+dllwt.display();
+
+console.log('\n');
+console.log(dllwt.size());
+console.log(dllwt.lastIndex());
+console.log(dllwt.isEmpty());
+
+console.log('\n');
+console.log(dllwt.delete());
+
+console.log('\n');
+dllwt.display();
+
+console.log('\n');
+console.log(dllwt.size());
+console.log(dllwt.lastIndex());
+console.log(dllwt.isEmpty());
+
+console.log('\n');
+console.log(dllwt.delete());
+
+console.log('\n');
+dllwt.display();
+
+console.log('\n');
+console.log(dllwt.size());
+console.log(dllwt.lastIndex());
+console.log(dllwt.isEmpty());

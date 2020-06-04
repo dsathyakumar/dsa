@@ -78,21 +78,22 @@ exports.deleteFirst = dll => {
     // get the deleted value
     deletedValue = dll.head.data;
 
-    // 1. Get the nextNode
-    // 2. set nextNode.prev = null;
-    // 3. set currenthead.next = null;
-    // 4. Set currentHead = nextNode
-    // 5. length--
-    let nextNode = dll.head.next;
-    nextNode.prev = null;
-    dll.head.next = null;
-    dll.head = nextNode;
-    dll.length--;
-
-    // then this was the last node in the list and so tail pointer is reset
-    if (dll.head === null) {
+    if (dll.head === dll.tail) {
+        dll.head =  null;
         dll.tail = null;
+    } else {
+        // 1. Get the nextNode
+        // 2. set nextNode.prev = null;
+        // 3. set currenthead.next = null;
+        // 4. Set currentHead = nextNode
+        // 5. length--
+        let nextNode = dll.head.next;
+        nextNode.prev = null;
+        dll.head.next = null;
+        dll.head = nextNode;
     }
+
+    dll.length--;
 
     return deletedValue;
 };
