@@ -11,7 +11,7 @@ const {
 } = require('./utils');
 
 const {
-  Node
+    DLLNode
 } = require('./node');
 
 /**
@@ -131,9 +131,8 @@ class DoublyLinkedList {
      */
     insert(node, index) {
         // node to be an instance of DLL Node
-        if (!node || !(node instanceof Node)) {
-            console.warn(`Node is empty or not an instanceof Node`);
-            return;
+        if (!(node instanceof Node)) {
+            node = new DLLNode(node);
         }
 
         // check for out of bound indexes

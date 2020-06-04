@@ -6,7 +6,7 @@
  * has another additional field associated with it
  * that holds the reference of the previous Node.
  */
-class Node {
+class DLLNode {
     constructor(data) {
         this.data = data;
         this.next = null;
@@ -14,4 +14,4 @@ class Node {
     }
 }
 
-exports.Node = Node;
+exports.DLLNode = DLLNode;
