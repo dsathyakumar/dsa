@@ -134,3 +134,8 @@ sllwt.recursiveReverse();
 
 console.log('\n');
 sllwt.display();
+
+// iterator capabilities
+for (let node of sllwt) {
+    console.log(node);
+}

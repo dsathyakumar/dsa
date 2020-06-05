@@ -24,6 +24,33 @@ class SinglyLinkedListWithTail {
         // pointer to tail node (new, will make do insertion at the end in O(1))
         // this is specifically used to implement a dynamic linear Q
         this.tail = null;
+
+        // provides an iterator for the SLL (this is possible because the range is known)
+        // since SLL has a tail pointer. This iteration is fwd
+        // The same kind of iterator would be possible in a CLL & a DLL with tail
+        // It would otherwise not be possible in a normal SLL / DLL / CDLL
+        this[Symbol.iterator] = function() {
+            let tempNode;
+            return {
+                current: this.head,
+                last: this.tail,
+                next() {
+                    if (this.current === null) {
+                        tempNode = undefined;
+                        return {
+                            done: true
+                        };
+                    } else {
+                        tempNode = this.current;
+                        this.current = this.current.next;
+                        return {
+                            done: false,
+                            value: tempNode
+                        };
+                    }
+                }
+            };
+        }
     }
 
     isEmpty() { // checks if the list is empty
