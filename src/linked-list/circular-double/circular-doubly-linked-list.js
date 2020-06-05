@@ -275,6 +275,10 @@ class CircularDoublyLinkedList {
         // oldTail is returned with its next and prev swapped
         const oldTail = rReverse(this.tail.next, this.tail);
 
+        oldHead.next = oldTail;
+
+        this.tail = oldHead;
+
         return;
     }
 
