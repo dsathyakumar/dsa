@@ -22,6 +22,34 @@ class DoublyLinkedListWithTail {
         this.head = null;
         this.tail = null;
         this.length = 0;
+
+        // provides an iterator for the DLL (this is possible because the range is known)
+        // since DLL has a tail pointer. This iteration is fwd.
+        // Its technically possible to have a reverse iterator.
+        // The same kind of iterator would be possible in a CLL & a SLL with tail
+        // It would otherwise not be possible in a normal SLL / DLL
+        this[Symbol.iterator] = function() {
+            let tempNode;
+            return {
+                current: this.head,
+                last: this.tail,
+                next() {
+                    if (this.current === null) {
+                        tempNode = undefined;
+                        return {
+                            done: true
+                        };
+                    } else {
+                        tempNode = this.current;
+                        this.current = this.current.next;
+                        return {
+                            done: false,
+                            value: tempNode
+                        };
+                    }
+                }
+            };
+        }
     }
 
     isEmpty() {

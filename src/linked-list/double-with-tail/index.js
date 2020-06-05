@@ -99,3 +99,17 @@ console.log('\n');
 console.log(dllwt.size());
 console.log(dllwt.lastIndex());
 console.log(dllwt.isEmpty());
+
+console.log('\n');
+console.log(dllwt.insert('Waymo'));
+console.log(dllwt.insert('ola'));
+console.log(dllwt.insert('lyft'));
+console.log(dllwt.insert('uber'));
+
+console.log('\n');
+dllwt.display();
+
+// iterator capabilities
+for (let node of dllwt) {
+    console.log(node);
+}
