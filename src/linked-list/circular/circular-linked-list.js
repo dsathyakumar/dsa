@@ -25,10 +25,10 @@ class CircularLinkedList {
         this.tail = null;
         this.length = 0;
 
-        // provides an iterator for the DLL (this is possible because the range is known)
-        // since DLL has a tail pointer. This iteration is fwd.
+        // provides an iterator for the CLL (this is possible because the range is known)
+        // since CLL has a tail pointer. This iteration is fwd.
         // Its technically possible to have a reverse iterator.
-        // The same kind of iterator would be possible in a CLL & a SLL with tail
+        // The same kind of iterator would be possible in a CLL & a SLL with tail & CDLL
         // It would otherwise not be possible in a normal SLL / DLL
         // This will execute in a for-of (where there is no range based iteration)
         this[Symbol.iterator] = function() {

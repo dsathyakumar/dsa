@@ -27,8 +27,8 @@ class SinglyLinkedListWithTail {
 
         // provides an iterator for the SLL (this is possible because the range is known)
         // since SLL has a tail pointer. This iteration is fwd
-        // The same kind of iterator would be possible in a CLL & a DLL with tail
-        // It would otherwise not be possible in a normal SLL / DLL / CDLL
+        // The same kind of iterator would be possible in a CLL & a DLL with tail & CDLL
+        // It would otherwise not be possible in a normal SLL / DLL
         this[Symbol.iterator] = function() {
             let tempNode;
             return {
