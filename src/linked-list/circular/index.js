@@ -272,3 +272,14 @@ cll.print();
 console.log('\n');
 console.log(cll.tail);
 console.log('--------------- Destroy ------------');
+
+console.log('\n');
+console.log(cll.insert('Waymo'));
+console.log(cll.insert('Ola'));
+console.log(cll.insert('Lyft'));
+console.log(cll.insert('Uber'));
+
+// iterator capabilities
+for (let node of cll) {
+    console.log(node);
+}
