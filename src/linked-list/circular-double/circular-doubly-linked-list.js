@@ -18,6 +18,45 @@ class CircularDoublyLinkedList {
     constructor() {
         this.length = 0;
         this.tail = null;
+
+        // provides an iterator for the CDLL (this is possible because the range is known)
+        // since CLL has a tail pointer. This iteration is fwd.
+        // Its technically possible to have a reverse iterator.
+        // The same kind of iterator would be possible in a CLL & a SLL with tail & DLL with tail
+        // It would otherwise not be possible in a normal SLL / DLL
+        // This will execute in a for-of (where there is no range based iteration)
+        this[Symbol.iterator] = function() {
+            let head = this.tail.next;
+            let tempNode;
+            let count = 0;
+            return {
+                current: this.tail.next,
+                last: this.tail,
+                next() {
+                    // will execute only when CLL cycles back to the head
+                    // will not execute for the 1st case when count = 0 and current = head
+                    // even if CLL had only 1 node (in which case head & tail would be a self ref)
+                    // it would enter this loop only the 2nd time, when count is 1
+                    if ((this.current === head) && (count > 0)) {
+                        tempNode = undefined;
+                        count = 0;
+                        return {
+                            done: true
+                        };
+                    } else {
+                        tempNode = this.current;
+                        this.current = this.current.next;
+                        count++;
+                        return {
+                            done: false,
+                            value: tempNode
+                        };
+                    }
+                }
+            };
+        }
+
+        Object.seal(this);
     }
 
     isEmpty() {

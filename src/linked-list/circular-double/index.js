@@ -106,3 +106,8 @@ cdll.recursiveReverse();
 
 console.log('\n');
 cdll.display();
+
+// iterator capabilities
+for (let node of cdll) {
+    console.log(node);
+}
