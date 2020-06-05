@@ -270,6 +270,8 @@ class CircularDoublyLinkedList {
             return;
         }
 
+        const oldTail = rReverse(this.tail.next);
+
         return;
     }
 
