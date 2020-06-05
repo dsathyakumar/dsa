@@ -1,11 +1,17 @@
 'use strict';
 
+
 exports.rReverse = (node, tail) => {
-    if (node !== null && node === tail) {
+    if ((node !== null) && (node === tail)) {
         return node;
     }
 
+    const reversedHead = this.rReverse(node.next, tail);
+    node.next.next = node;
+    node.prev = node.next;
+    node.next = null;
 
+    return reversedHead;
 };
 
 // With the tail pointer (head is accessed) & presence of prev & next pointers, insertFirst is O(1)
