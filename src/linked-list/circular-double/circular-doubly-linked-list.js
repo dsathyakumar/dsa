@@ -270,7 +270,10 @@ class CircularDoublyLinkedList {
             return;
         }
 
-        const oldTail = rReverse(this.tail.next);
+        let oldHead = this.tail.next;
+
+        // oldTail is returned with its next and prev swapped
+        const oldTail = rReverse(this.tail.next, this.tail);
 
         return;
     }
@@ -325,11 +328,11 @@ class CircularDoublyLinkedList {
         let deletedValue;
 
         if ((typeof index === 'number' && index === 0) || (this.size() === 1)) {
-            deletedValue = deleteFirst(this, data);
+            deletedValue = deleteFirst(this);
         } else if (typeof index === 'number' && index !== 0 && index !== this.lastIndex()) {
-            deletedValue = deleteAtIndex(this, data, index);
+            deletedValue = deleteAtIndex(this, index);
         } else {
-            deletedValue = deleteLast(this, data);
+            deletedValue = deleteLast(this);
         }
 
         return deletedValue;

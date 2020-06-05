@@ -24,9 +24,9 @@ cdll.modify(0, 'MSFT');
 cdll.updateAll('MSFT', 'microsoft');
 
 console.log('\n');
-cdll.insert('AAPL');
-cdll.insert('GOOG');
-cdll.insert('AMZN', 1);
+console.log(cdll.insert('AAPL'));
+console.log(cdll.insert('GOOG'));
+console.log(cdll.insert('AMZN', 1));
 
 console.log('\n');
 console.log(cdll.isEmpty());
@@ -43,12 +43,55 @@ console.log('\n');
 cdll.display();
 
 console.log('\n');
-cdll.insert('AAPL');
-cdll.insert('GOOG');
-cdll.insert('AMZN', 1);
+console.log(cdll.insert('AAPL'));
+console.log(cdll.insert('GOOG'));
+console.log(cdll.insert('AMZN', 1));
 
 console.log('\n');
 cdll.reverse();
+
+console.log('\n');
+cdll.display();
+
+console.log('\n');
+console.log(cdll.find('AAPL'));
+console.log(cdll.find('TSLA'));
+
+console.log('\n');
+console.log(cdll.get(0));
+console.log(cdll.get(5));
+
+console.log('\n');
+cdll.updateAll('AMZN', 'amazon');
+cdll.modify(0, 'google');
+
+console.log('\n');
+cdll.display();
+
+// console.log('\n');
+// cdll.recursiveReverse();
+
+console.log(cdll.delete(1));
+console.log(cdll.delete());
+console.log(cdll.delete());
+
+console.log('\n');
+cdll.display();
+
+console.log('\n');
+console.log(cdll.isEmpty());
+console.log(cdll.size());
+console.log(cdll.lastIndex());
+
+console.log('\n');
+console.log(cdll.insert('TSLA'));
+console.log(cdll.insert('NIKE', 0));
+
+console.log('\n');
+cdll.display();
+
+console.log(cdll.delete(0));
+console.log(cdll.delete());
 
 console.log('\n');
 cdll.display();
