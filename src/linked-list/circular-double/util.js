@@ -3,6 +3,10 @@
 
 exports.rReverse = (node, tail) => {
     if ((node !== null) && (node === tail)) {
+        let nextNode = node.next;
+        node.next = null;
+        node.prev = nextNode;
+        nextNode = undefined;
         return node;
     }
 
