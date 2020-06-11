@@ -47,6 +47,14 @@ class BinaryTree {
         return ((this.root === null) && (this.size === 0));
     }
 
+    numberOfNodes() {
+        return this.size;
+    }
+
+    numberOfEdges() {
+        return (this.size - 1);
+    }
+
     insert(data) {
         // if data is empty, return
         if (typeof data === 'undefined' || data === null) {
@@ -100,6 +108,10 @@ class BinaryTree {
         // TODO, destroy Q if its not empty
 
         return ++this.size;
+    }
+
+    destroyTree() {
+        
     }
 
     delete() {
