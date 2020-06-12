@@ -129,6 +129,7 @@ exports.postOrder = (root, size) => {
                 // pop the element off the stack
                 stack.pop();
                 // reset the prevNode to NULL (so that the inner loop can pick off the next TOP element from stack)
+                currentNode = prevNode;
                 prevNode = null;
             } while (prevNode === null);
         }
