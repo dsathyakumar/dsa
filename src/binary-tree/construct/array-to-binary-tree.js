@@ -5,6 +5,9 @@ const {
 /**
  * This converts a given Array to a Binary Tree.
  * It requires the Array to follow the format as to how a complete binary tree would be filled
+ * A complete binary tree is a type of binary tree where all the levels except for perhaps the
+ * last level is completely filled. And regarding the last level, its filled from leftmost.
+ * So this requires for the complete binary tree to indicate nodes that are NULL to be marked as null.
  * Leaf Nodes are marked with NULL, NULL
  * Empty Nodes are marked with NULL.
  *      For a node at index i,
@@ -14,7 +17,7 @@ const {
  *          -> parent is at Math.floor((i-1) / 2)
  * The array expected is assumed to be filled with Level Order Traversal.
  * This implementation does not skip over NULL nodes.
- * A NULL when enQ'd will have furthe references to NULL only
+ * A NULL when enQ'd will have further references to NULL only (which can be optimized)
  * Try with:
  * [3, null, 4, null, null, null, 5, null, null, null, null, null, null, null, 6]
  * @param {Array} arr
