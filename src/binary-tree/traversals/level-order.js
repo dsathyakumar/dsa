@@ -41,4 +41,39 @@ const levelOrder = (root, size) => {
     return result;
 };
 
+// LC 102
+exports.levelOrderIntoSeparateArrays = (root) => {
+    let q = [];
+    let result = [];
+
+    q.push(root);
+
+    let deQElement,
+        level = 0;
+
+    while (q.length) {
+        if (!result[level]) {
+            result[level] = [];
+        }
+
+        while (q.length) {
+            result[level].push(q.shift());
+        }
+
+        for (let count = 0; count < result[level].length; count++) {
+            let currentElement = result[level][count];
+            if (currentElement.left) {
+                q.push(currentElement.left);
+            }
+
+            if (currentElement.right) {
+                q.push(currentElement.right);
+            }
+        }
+    }
+};
+
 exports.levelOrder = levelOrder;
+
+exports.levelOrderRecursive = () => {};
+exports.levelOrderReverse = () => {};
