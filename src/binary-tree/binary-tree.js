@@ -5,27 +5,42 @@ const {
 } = require('../queue/dynamic-circular-array-queue/dynamic-circular-array-queue');
 
 const {
+    preOrder,
+    preOrderRecursive,
+    inOrder,
+    inOrderRecursive,
+    postOrder,
+    postOrderRecursive,
+    levelOrder,
+    levelOrderIntoSeparateArrays,
+    levelOrderRecursive,
+    levelOrderReverse,
+    verticalPreOrderTraversal,
+    zigZagLevel,
+    zigZaglevelReverse,
+    spiralAntiClockWise,
+    spiralClockwise,
+    diagonalLevel,
+    boundaryLevelOrderTraversal,
+    morrisInOrderTraversal
+} = require('./traversals');
+
+const {
+    insert
+} = require('./insertion');
+
+const {
+    deleteNode,
+    destroyTree
+} = require('./deletion');
+
+const {
     TreeNode
 } = require('./node');
 
 const {
-    preOrder,
-    preOrderRecursive    
-} = require('./traversals/pre-order');
-
-const {
-    inOrder,
-    inOrderRecursive
-} = require('./traversals/in-order');
-
-const {
-    postOrder,
-    postOrderRecursive
-} = require('./traversals/post-order');
-
-const {
-    levelOrder
-} = require('./traversals/level-order');
+    arrayToBinaryTree
+} = require('./construct/array-to-binary-tree')
 
 /**
  * A tree with atmost 2 children is a Binary Tree.
@@ -72,36 +87,7 @@ class BinaryTree {
         if (this.isEmpty()) {
             this.root = data;
         } else {
-            // begin a level order traversal from the Root Node.
-            let currentNode = this.root;
-
-            // Store the LEFT and RIGHT in the same order.
-            // So that the LEFT goes into the Q 1st and is the 1st to be deQ'd.
-            // Followed by the RIGHT.
-            let q = new DynamicCircularArrayQueue(this.size);
-
-            while (currentNode !== null && typeof currentNode !== 'undefined') {
-                // check if the LEFT is empty, and insert & break
-                // else, enqueue it.
-                if (currentNode.left === null) {
-                    currentNode.left = data;
-                    break;
-                } else {
-                    q.enqueue(currentNode.left);
-                }
-
-                // check if the RIGHT is empty, and insert & break
-                // else, enqueue it.
-                if (currentNode.right === null) {
-                    currentNode.right = data;
-                    break;
-                } else {
-                    q.enqueue(currentNode.right);
-                }
-
-                // to get the next node for iteration, deque the Q
-                currentNode = q.dequeue();
-            }
+            insert(this.root, this.size)
         }
 
         // it is possible that there are elements in the Q
@@ -111,7 +97,7 @@ class BinaryTree {
     }
 
     destroyTree() {
-        
+
     }
 
     delete() {
@@ -205,5 +191,25 @@ class BinaryTree {
 
     }
 }
+
+// static methods.
+BinaryTree.arrayToBinaryTree = arrayToBinaryTree;
+
+// TRAVERSALS
+BinaryTree.inOrder = inOrder;
+BinaryTree.inOrderRecursive = inOrderRecursive;
+BinaryTree.postOrder = postOrder;
+BinaryTree.postOrderRecursive = postOrderRecursive;
+BinaryTree.levelOrder = levelOrder;
+
+// Morris TRAVERSALS
+BinaryTree.morrisInOrderTraversal = morrisInOrderTraversal;
+
+// Other Traversals
+BinaryTree.verticalPreOrderTraversal = verticalPreOrderTraversal;
+BinaryTree.zigZagTraversal = zigZagTraversal;
+BinaryTree.zigZagReverse = zigZagReverse;
+BinaryTree.DiagonalTraversal = DiagonalTraversal;
+BinaryTree.spiralTraversal = spiralTraversal;
 
 exports.BinaryTree = BinaryTree;
