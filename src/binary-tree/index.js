@@ -49,4 +49,12 @@ console.log(root);
 console.log(BinaryTree.verticalPreOrderTraversal(root));
 console.log('hi');
 
-const morrisPreOrder = BinaryTree.arrayToBinaryTree();
+// picked from Tushar Roy's video example
+const morrisInOrderTreeSample = [
+    10, 
+    5, 30,
+    -2, 6, null, 20,
+    null, 2, null, 8, null, null, null, null,
+    null, null, -1, null, null, null, null, null, null, null, null, null, null, null, null, null
+];
+const morrisPreOrder = BinaryTree.arrayToBinaryTree(morrisInOrderTreeSample);

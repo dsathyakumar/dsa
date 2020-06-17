@@ -195,21 +195,28 @@ class BinaryTree {
 // static methods.
 BinaryTree.arrayToBinaryTree = arrayToBinaryTree;
 
-// TRAVERSALS
+// TRAVERSALS - DFS
 BinaryTree.inOrder = inOrder;
 BinaryTree.inOrderRecursive = inOrderRecursive;
 BinaryTree.postOrder = postOrder;
 BinaryTree.postOrderRecursive = postOrderRecursive;
+
+// TRAVERSALS - BFS
 BinaryTree.levelOrder = levelOrder;
+BinaryTree.levelOrderIntoSeparateArrays = levelOrderIntoSeparateArrays;
+BinaryTree.levelOrderRecursive = levelOrderRecursive;
+BinaryTree.levelOrderReverse = levelOrderReverse;
 
 // Morris TRAVERSALS
 BinaryTree.morrisInOrderTraversal = morrisInOrderTraversal;
 
 // Other Traversals
 BinaryTree.verticalPreOrderTraversal = verticalPreOrderTraversal;
-BinaryTree.zigZagTraversal = zigZagTraversal;
-BinaryTree.zigZagReverse = zigZagReverse;
-BinaryTree.DiagonalTraversal = DiagonalTraversal;
-BinaryTree.spiralTraversal = spiralTraversal;
+BinaryTree.zigZagTraversal = zigZagLevel;
+BinaryTree.zigZagReverse = zigZaglevelReverse;
+BinaryTree.DiagonalTraversal = diagonalLevel;
+BinaryTree.spiralClockwise = spiralClockwise;
+BinaryTree.spiralAntiClockWise = spiralAntiClockWise;
+BinaryTree.boundaryLevelOrderTraversal = boundaryLevelOrderTraversal;
 
 exports.BinaryTree = BinaryTree;
