@@ -1,10 +1,6 @@
 'use strict';
 
 const {
-    DynamicCircularArrayQueue
-} = require('../queue/dynamic-circular-array-queue/dynamic-circular-array-queue');
-
-const {
     preOrder,
     preOrderRecursive,
     inOrder,
@@ -100,8 +96,13 @@ class BinaryTree {
 
     }
 
-    delete() {
+    delete(value) {
+        if (typeof value === 'undefined') {
+            console.warn(`Value to delete must be specified`);
+            return false
+        }
 
+        return deleteNode(this.root, value);
     }
 
     preOrder() {
@@ -192,7 +193,8 @@ class BinaryTree {
     }
 }
 
-// static methods.
+// static methods are exposed to make it work on a TreeNode
+// type that is a root/
 BinaryTree.arrayToBinaryTree = arrayToBinaryTree;
 
 // TRAVERSALS - DFS
@@ -219,4 +221,8 @@ BinaryTree.spiralClockwise = spiralClockwise;
 BinaryTree.spiralAntiClockWise = spiralAntiClockWise;
 BinaryTree.boundaryLevelOrderTraversal = boundaryLevelOrderTraversal;
 
+// Node deletion
+BinaryTree.deleteNode = deleteNode;
+
 exports.BinaryTree = BinaryTree;
+

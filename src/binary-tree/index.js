@@ -44,17 +44,27 @@ const {
 
 
 // const root = BinaryTree.arrayToBinaryTree([3, null, 4, null, null, null, 5, null, null, null, null, null, null, null, 6]);
-const root = BinaryTree.arrayToBinaryTree([1, 2, 3, 4, 5, 6, 7, null, null, null, null, null, 8, null, 9]);
-console.log(root);
-console.log(BinaryTree.verticalPreOrderTraversal(root));
-console.log('hi');
+// const root = BinaryTree.arrayToBinaryTree([1, 2, 3, 4, 5, 6, 7, null, null, null, null, null, 8, null, 9]);
+// console.log(root);
+// console.log(BinaryTree.verticalPreOrderTraversal(root));
+// console.log('hi');
 
 // picked from Tushar Roy's video example
-const morrisInOrderTreeSample = [
-    10, 
-    5, 30,
-    -2, 6, null, 20,
-    null, 2, null, 8, null, null, null, null,
-    null, null, -1, null, null, null, null, null, null, null, null, null, null, null, null, null
+// const morrisInOrderTreeSample = [
+//     10, 
+//     5, 30,
+//     -2, 6, null, 20,
+//     null, 2, null, 8, null, null, null, null,
+//     null, null, -1, null, null, null, null, null, null, null, null, null, null, null, null, null
+// ];
+// const morrisInOrderTree = BinaryTree.arrayToBinaryTree(morrisInOrderTreeSample);
+// console.log(BinaryTree.morrisInOrderTraversal(morrisInOrderTree))
+
+// picked from GFG
+const deleteionTree = [
+    10,
+    20, 30,
+    null, null, null, 40
 ];
-const morrisPreOrder = BinaryTree.arrayToBinaryTree(morrisInOrderTreeSample);
+const sampleTreeForDelete = BinaryTree.arrayToBinaryTree(deleteionTree);
+BinaryTree.deleteNode(sampleTreeForDelete, 20);
