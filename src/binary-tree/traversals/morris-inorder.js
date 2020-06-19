@@ -51,6 +51,7 @@ exports.morrisInOrderTraversal = root => {
 
         if (!hasLeft && !hasRight) {
             result.push(currentNode.val || currentNode.data);
+            break;
         }
     }
 
