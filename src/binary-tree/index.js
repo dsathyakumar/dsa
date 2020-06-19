@@ -61,10 +61,20 @@ const {
 // console.log(BinaryTree.morrisInOrderTraversal(morrisInOrderTree))
 
 // picked from GFG
-const deleteionTree = [
-    10,
-    20, 30,
-    null, null, null, 40
+// const deleteionTree = [
+//     10,
+//     20, 30,
+//     null, null, null, 40
+// ];
+// const sampleTreeForDelete = BinaryTree.arrayToBinaryTree(deleteionTree);
+// BinaryTree.deleteNode(sampleTreeForDelete, 20);
+
+// picked from GFG
+const boundaryLevelOrderTree = [
+    1,
+    12, 13,
+    11, 6, 4, 11,
+    23, null, 7, 9, null, null, 2, 4
 ];
-const sampleTreeForDelete = BinaryTree.arrayToBinaryTree(deleteionTree);
-BinaryTree.deleteNode(sampleTreeForDelete, 20);
+const sampleBoundaryLevelOrderTree = BinaryTree.arrayToBinaryTree(boundaryLevelOrderTree);
+console.log(BinaryTree.boundaryLevelOrderTraversal(sampleBoundaryLevelOrderTree));
