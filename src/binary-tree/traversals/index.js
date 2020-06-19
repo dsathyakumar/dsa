@@ -49,9 +49,12 @@ const {
 } = require('./diagonal-level');
 
 const {
-    spiralAntiClockWise,
     spiralClockwise
-} = require('./spiral-order');
+} = require('./spiral-clocwise');
+
+const {
+    spiralAntiClockWise
+} = require('./spiral-anticlockwise');
 
 const {
     boundaryLevelOrderTraversal
