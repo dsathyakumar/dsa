@@ -14,6 +14,7 @@ const {
     verticalPreOrderTraversal,
     zigZagLevel,
     zigZaglevelReverse,
+    zigZagInverse,
     spiralAntiClockWise,
     spiralClockwise,
     diagonalLevel,
@@ -216,6 +217,7 @@ BinaryTree.morrisInOrderTraversal = morrisInOrderTraversal;
 BinaryTree.verticalPreOrderTraversal = verticalPreOrderTraversal;
 BinaryTree.zigZagTraversal = zigZagLevel;
 BinaryTree.zigZagReverse = zigZaglevelReverse;
+BinaryTree.zigZagInverse = zigZagInverse;
 BinaryTree.DiagonalTraversal = diagonalLevel;
 BinaryTree.spiralClockwise = spiralClockwise;
 BinaryTree.spiralAntiClockWise = spiralAntiClockWise;

@@ -37,6 +37,10 @@ const {
 } = require('./zigzag-level-reverse');
 
 const {
+    zigZagInverse
+} = require('./zigzag-level-inverse');
+
+const {
     verticalPreOrderTraversal
 } = require('./vertical-level-pre-order');
 
@@ -83,6 +87,7 @@ exports.spiralAntiClockWise = spiralAntiClockWise;
 exports.spiralClockwise = spiralClockwise;
 exports.zigZagLevel = zigZagLevel;
 exports.zigZaglevelReverse = zigZaglevelReverse;
+exports.zigZagInverse = zigZagInverse;
 exports.diagonalLevel = diagonalLevel;
 exports.boundaryLevelOrderTraversal = boundaryLevelOrderTraversal;
 
