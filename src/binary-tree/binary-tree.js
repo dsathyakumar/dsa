@@ -36,8 +36,9 @@ const {
 } = require('./node');
 
 const {
-    arrayToBinaryTree
-} = require('./construct/array-to-binary-tree')
+    arrayToBinaryTree,
+    listOfListToBinaryTree
+} = require('./construct/');
 
 /**
  * A tree with atmost 2 children is a Binary Tree.
@@ -197,6 +198,8 @@ class BinaryTree {
 // static methods are exposed to make it work on a TreeNode
 // type that is a root/
 BinaryTree.arrayToBinaryTree = arrayToBinaryTree;
+
+BinaryTree.listOfListToBinaryTree = listOfListToBinaryTree;
 
 // TRAVERSALS - DFS
 BinaryTree.inOrder = inOrder;

@@ -70,11 +70,43 @@ const {
 // BinaryTree.deleteNode(sampleTreeForDelete, 20);
 
 // picked from GFG
-const boundaryLevelOrderTree = [
-    1,
-    12, 13,
-    11, 6, 4, 11,
-    23, null, 7, 9, null, null, 2, 4
-];
-const sampleBoundaryLevelOrderTree = BinaryTree.arrayToBinaryTree(boundaryLevelOrderTree);
-console.log(BinaryTree.boundaryLevelOrderTraversal(sampleBoundaryLevelOrderTree));
+// const boundaryLevelOrderTree = [
+//     1,
+//     12, 13,
+//     11, 6, 4, 11,
+//     23, null, 7, 9, null, null, 2, 4
+// ];
+// const sampleBoundaryLevelOrderTree = BinaryTree.arrayToBinaryTree(boundaryLevelOrderTree);
+// console.log(BinaryTree.boundaryLevelOrderTraversal(sampleBoundaryLevelOrderTree));
+
+// Runstone academy / bradfieldCS (List of Lists representation)
+const bt = BinaryTree.listOfListToBinaryTree([
+    'A',
+    [
+        'B',
+        [
+            'D',
+            [],
+            []
+        ],
+        [
+            'E',
+            [],
+            []
+        ]
+    ],
+    [
+        'C',
+        [
+            'F',
+            [],
+            []
+        ],
+        [
+            'G',
+            [],
+            []
+        ]
+    ]
+]);
+console.log(bt);
