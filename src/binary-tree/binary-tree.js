@@ -37,8 +37,13 @@ const {
 
 const {
     arrayToBinaryTree,
-    listOfListToBinaryTree
+    listOfListToBinaryTree,
+    BinaryTreeToArray,
+    BinaryTreeToListOfLists,
+    mapToBinaryTree,
+    BinaryTreeToMap
 } = require('./construct/');
+const { BinaryTreeToArray } = require('./construct/array-to-binary-tree');
 
 /**
  * A tree with atmost 2 children is a Binary Tree.
@@ -198,8 +203,13 @@ class BinaryTree {
 // static methods are exposed to make it work on a TreeNode
 // type that is a root/
 BinaryTree.arrayToBinaryTree = arrayToBinaryTree;
+BinaryTree.BinaryTreeToArray = BinaryTreeToArray;
 
 BinaryTree.listOfListToBinaryTree = listOfListToBinaryTree;
+BinaryTree.BinaryTreeToListOfLists = BinaryTreeToListOfLists;
+
+BinaryTree.mapToBinaryTree = mapToBinaryTree;
+BinaryTree.BinaryTreeToMap = BinaryTreeToMap;
 
 // TRAVERSALS - DFS
 BinaryTree.inOrder = inOrder;

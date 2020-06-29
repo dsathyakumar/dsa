@@ -84,3 +84,50 @@ exports.arrayToBinaryTree = (arr) => {
 
     return rootNode;
 };
+
+exports.BinaryTreeToArray = (root) => {
+    if (!root) {
+        console.warn(`Tree is empty!`);
+        return;
+    }
+
+    const bTreeArray = [];
+    const q = [root];
+
+    let deqNode;
+
+    while (q.length) {
+        deqNode = q.shift();
+
+        // if a node exists (if its a not null),
+        // then push that value. Else push a NULL
+        // A NULL is possible here when dealing with a LEAF node.
+        if (deqNode) {
+            bTreeArray.push(deqNode.data || deqNode.val);
+        } else {
+            bTreeArray.push(null);
+        }
+
+        // if a LEFT subtree exists, push that into the Q
+        // if Not, as long as the current node is not null, push a NULL
+        // this means => current node doesn't have a LEFT or is a LEAF node
+        // By doing this, we don't push a NULL for a null node (previously included NULL)
+        if (deqNode && deqNode.left) {
+            q.push(deqNode.left);
+        } else if (deqNode !== null) {
+            q.push(null);
+        }
+
+        // if a RIGHT subtree exists, push that into the Q
+        // if Not, as long as the current node is not null, push a NULL
+        // this means => current node doesn't have a RIGHT or is a LEAF node
+        // By doing this, we don't push a NULL for a null node (previously included NULL)
+        if (deqNode && deqNode.right) {
+            q.push(deqNode.right);
+        } else if (deqNode !== null) {
+            q.push(null);
+        }
+    }
+
+    return bTreeArray;
+};

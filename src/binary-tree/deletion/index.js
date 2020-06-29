@@ -104,6 +104,90 @@ exports.deleteNode = (root, value) => {
     return false;
 };
 
-exports.destroyTree = () => {
+/**
+ * Destroys the tree by doing a post order traversal and deleting the
+ * LEFT and RIGHT subtrees, before deleting the ROOT.
+ * @param {TreeNode} root
+ */
+exports.destroyTree = root => {
+    if (!root) {
+        console.warn(`Tree is empty already`);
+        return;
+    }
 
+    // Does a post order traversal,
+    // deletes the child nodes before deletion of the parent.
+    // Post Order Traversal follows the L-R-D order
+    let currentNode = root;
+    let hasLeft = false;
+    let hasRight = false;
+    let stack = [];
+    let prevNode = null;
+
+    while ((currentNode !== null) || (typeof currentNode !== 'undefined')) {
+        hasLeft = (currentNode.left !== null);
+        hasRight = (currentNode.right !== null);
+
+        // when there is a left or right, push into the stack
+        if (hasLeft || hasRight) {
+            stack.unshift(currentNode);
+        }
+
+        // if there is a LEFT, process it first
+        if (hasLeft) {
+            currentNode = currentNode.left;
+            continue;
+        }
+
+        // if a LEFT is absent, but a RIGHT exists, process it
+        if (!hasLeft && hasRight) {
+            currentNode = currentNode.right;
+            continue;
+        }
+
+        // if a given Node has neither RIGHT nor LEFT subtree, => its a LEAF
+        // then it has to be deleted from the parent
+        // For this we need to retrieve the parent which is in the top of the stack
+        if (!hasLeft || !hasRight) {
+            // peek the top of the stack
+            // don't pop it off, cos if there is a RIGHT subtree,
+            // then, that will have to be processed.
+            prevNode = stack[0];
+
+            // if there isn't any on the stack => currentNode is the lastNode
+            // => current is the root, per post order traversal
+            // reset it to undefined and break the loop
+            if (!prevNode) {
+                currentNode = undefined;
+                break;
+            }
+
+            // if the currentNode is the LEFT of the parent,
+                // reset parent.Left to NULL,
+                // proceed to check if a RIGHt exists.
+                    // if a RIGHT exists, process it.
+                    // if a RIGHT did not exist
+                        // pop the node off the stack
+                        // and process it (as it has become a LEAF now)
+            // if the currentNode is teh RIGHT of the parent,
+                // reset parent.RIGHT to NULL
+                // pop the node off the stack
+                // process the popped now (as it has become a LEAF now)
+            if (prevNode.left === currentNode) {
+                prevNode.left = null;
+                if (prevNode.right) {
+                    currentNode = prevNode.right;
+                } else {
+                    currentNode = stack.shift();
+                }
+            } else if (prevNode.right === currentNode) {
+                prevNode.right = null;
+                currentNode = stack.shift();
+            }
+
+            prevNode = null;
+        }
+    }
+
+    return;
 };
