@@ -29,7 +29,7 @@
     "devDependencies": {
         "chai": "^3.5.0",
         "chai-spies": "^0.7.1",
-        "eslint": "^3.19.0",
+        "eslint": "^7.1.0",
         "eslint-config-ebay": "^0.1.4",
         "istanbul": "^0.4.5",
         "mocha": "^3.3.0"
