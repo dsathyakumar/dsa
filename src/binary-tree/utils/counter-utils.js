@@ -8,7 +8,7 @@
 exports.getInternalNodeCount = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     // count of the number of internal nodes nodes (nodes with atleast one child)
@@ -53,7 +53,7 @@ exports.getNonTerminalNodeCount = this.getInternalNodeCount;
 exports.getLeafNodeCount = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     // count of the number of leaves
@@ -96,7 +96,7 @@ exports.getLeafNodeCount = root => {
 exports.getFullNodeCount = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     // count of the number of full nodes
@@ -139,7 +139,7 @@ exports.getFullNodeCount = root => {
 exports.getHalfNodeCount = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     // count of the number of half nodes (nodes with only 1 child)
@@ -183,7 +183,7 @@ exports.getHalfNodeCount = root => {
 exports.numberOfLevels = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     let levelCount = 0;
@@ -232,7 +232,7 @@ exports.numberOfLevels = root => {
 exports.numberOfNodes = root => {
     if (!root) {
         console.warn('Tree is empty!');
-        return;
+        return -1;
     }
 
     // count of the number of half nodes (nodes with only 1 child)
