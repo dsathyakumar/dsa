@@ -218,3 +218,17 @@ exports.numberOfNodes = root => {
 
     return nodeCount;
 };
+
+/**
+ * Returns the number of edges in a Tree
+ * @param {TreeNode} root
+ */
+exports.numberOfEdges = root => {
+    if (!root) {
+        console.warn('Tree is empty!');
+        return -1;
+    }
+
+    // if, only Root exists, the number of edges = 0
+    return (this.numberOfNodes - 1);
+};

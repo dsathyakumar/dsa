@@ -36,7 +36,8 @@ const {
     getHalfNodeCount,
     getLeafCount,
     numberOfLevels,
-    numberOfNodes
+    numberOfNodes,
+    numberOfEdges
 } = require('./utils/counter-utils');
 
 const {
@@ -65,19 +66,10 @@ const {
 class BinaryTree {
     constructor() {
         this.root = null;
-        this.size = 0;
     }
 
     isEmpty() {
         return ((this.root === null) && (this.size === 0));
-    }
-
-    numberOfNodes() {
-        return this.size;
-    }
-
-    numberOfEdges() {
-        return (this.size - 1);
     }
 
     insert(data) {
@@ -100,14 +92,11 @@ class BinaryTree {
             insert(this.root, this.size)
         }
 
-        // it is possible that there are elements in the Q
-        // TODO, destroy Q if its not empty
-
-        return ++this.size;
+        return;
     }
 
     destroyTree() {
-
+        return destroyTree(this.root);
     }
 
     delete(value) {
@@ -253,6 +242,7 @@ BinaryTree.getHalfNodeCount = getHalfNodeCount;
 BinaryTree.getLeafCount = getLeafCount;
 BinaryTree.numberOfLevels = numberOfLevels;
 BinaryTree.numberOfNodes = numberOfNodes;
+BinaryTree.numberOfEdges = numberOfEdges;
 
 exports.BinaryTree = BinaryTree;
 
