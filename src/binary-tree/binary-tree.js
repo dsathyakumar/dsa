@@ -32,6 +32,14 @@ const {
 } = require('./deletion');
 
 const {
+    getFullNodeCount,
+    getHalfNodeCount,
+    getLeafCount,
+    numberOfLevels,
+    numberOfNodes
+} = require('./utils/counter-utils');
+
+const {
     TreeNode
 } = require('./node');
 
@@ -43,7 +51,6 @@ const {
     mapToBinaryTree,
     BinaryTreeToMap
 } = require('./construct/');
-const { BinaryTreeToArray } = require('./construct/array-to-binary-tree');
 
 /**
  * A tree with atmost 2 children is a Binary Tree.
@@ -238,6 +245,14 @@ BinaryTree.boundaryLevelOrderTraversal = boundaryLevelOrderTraversal;
 
 // Node deletion
 BinaryTree.deleteNode = deleteNode;
+BinaryTree.destroyTree = destroyTree;
+
+// counts
+BinaryTree.getFullNodeCount = getFullNodeCount;
+BinaryTree.getHalfNodeCount = getHalfNodeCount;
+BinaryTree.getLeafCount = getLeafCount;
+BinaryTree.numberOfLevels = numberOfLevels;
+BinaryTree.numberOfNodes = numberOfNodes;
 
 exports.BinaryTree = BinaryTree;
 
