@@ -34,7 +34,8 @@ const {
 const {
     getFullNodeCount,
     getHalfNodeCount,
-    getLeafCount,
+    getLeafNodeCount,
+    getInternalNodeCount,
     numberOfLevels,
     numberOfNodes,
     numberOfEdges
@@ -194,6 +195,46 @@ class BinaryTree {
     get() {
 
     }
+
+    toArray() {
+        return BinaryTreeToArray(this.root);
+    }
+
+    toListOfLists() {
+        return BinaryTreeToListOfLists(this.root);
+    }
+
+    toMap() {
+        return BinaryTreeToMap(this.root);
+    }
+
+    getFullNodeCount() {
+        return getFullNodeCount(this.root);
+    }
+
+    getHalfNodeCount() {
+        return getHalfNodeCount(this.root);
+    }
+
+    getLeafNodeCount() {
+        return getLeafNodeCount(this.root);
+    }
+
+    getNumberofNodes() {
+        return numberOfNodes(this.root);
+    }
+
+    getNumberOfLevels() {
+        return numberOfLevels(this.root);
+    }
+
+    getNumberOfEdges() {
+        return numberOfEdges(this.root);
+    }
+
+    getInternalNodeCount() {
+        return getInternalNodeCount(this.root);
+    }
 }
 
 // static methods are exposed to make it work on a TreeNode
@@ -239,7 +280,8 @@ BinaryTree.destroyTree = destroyTree;
 // counts
 BinaryTree.getFullNodeCount = getFullNodeCount;
 BinaryTree.getHalfNodeCount = getHalfNodeCount;
-BinaryTree.getLeafCount = getLeafCount;
+BinaryTree.getLeafCount = getLeafNodeCount;
+BinaryTree.getInternalNodeCount = getInternalNodeCount;
 BinaryTree.numberOfLevels = numberOfLevels;
 BinaryTree.numberOfNodes = numberOfNodes;
 BinaryTree.numberOfEdges = numberOfEdges;

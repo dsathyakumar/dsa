@@ -1,11 +1,56 @@
 'use strict';
 
 /**
+ * This returns the count of the internal Nodes (non-leaf nodes)
+ * @param {TreeNode} root
+ * @returns {Number} internalNodeCount
+ */
+exports.getInternalNodeCount = root => {
+    if (!root) {
+        console.warn('Tree is empty!');
+        return;
+    }
+
+    // count of the number of internal nodes nodes (nodes with atleast one child)
+    let internalNodeCount = 0;
+
+    // the Q that holds the node as part of level order traversal
+    const q = [root];
+
+    // the node that is deq'd upon every iteration
+    let deqNode;
+
+    while (q.length) {
+        // deQ from the Q
+        deqNode = q.shift();
+
+        // if either of left or the right subtrees exist, then its an internal node
+        if ((deqNode.left !== null || deqNode.right !== null)) {
+            ++internalNodeCount;
+        }
+
+        // if a LEFT exists, enQ it
+        if (deqNode.left) {
+            q.push(deqNode.left);
+        }
+
+        // if a RIGHT exists, enQ it
+        if (deqNode.right) {
+            q.push(deqNode.right);
+        }
+    }
+
+    return internalNodeCount;
+};
+
+exports.getNonTerminalNodeCount = this.getInternalNodeCount;
+
+/**
  * This gets the count of the number of Leaf nodes in a binary Tree
  * @param {TreeNode} root
  * @returns {Number} leafNodeCount
  */
-exports.getLeafCount = root => {
+exports.getLeafNodeCount = root => {
     if (!root) {
         console.warn('Tree is empty!');
         return;
@@ -232,3 +277,7 @@ exports.numberOfEdges = root => {
     // if, only Root exists, the number of edges = 0
     return (this.numberOfNodes - 1);
 };
+
+// the following are other terms used to refer to Leaf Nodes
+exports.getTerminalNodeCount = this.getLeafNodeCount;
+exports.getExternalNodeCount = this.getLeafNodeCount;
