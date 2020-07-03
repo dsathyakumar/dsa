@@ -95,11 +95,15 @@ exports.levelOrderRecursive = root => {
 
     // recursive function
     const traverseLevel = (node, level) => {
+        // base case for a pass
         if (level === 0) {
             result.push(node.data || node.val);
             return true;
         }
 
+        // if it hits a node after leaf => NULL => return
+        // this will break the while loop
+        // ultimate base case.
         if (node === null) {
             return;
         }
