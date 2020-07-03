@@ -3,17 +3,17 @@
 const {
     arrayToBinaryTree,
     BinaryTreeToArray
-} = require('./array-to-binary-tree');
+} = require('./array-representation');
 
 const {
     listOfListToBinaryTree,
     BinaryTreeToListOfLists
-} = require('./list-of-list-to-binary-tree');
+} = require('./list-of-list-representation');
 
 const {
     mapToBinaryTree,
     BinaryTreeToMap
-} = require('./map-to-binary-tree');
+} = require('./map-representation');
 
 // Array Representation of Binary tree
 exports.arrayToBinaryTree = arrayToBinaryTree;
