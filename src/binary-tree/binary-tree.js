@@ -39,7 +39,7 @@ const {
     numberOfLevels,
     numberOfNodes,
     numberOfEdges
-} = require('./utils/counter-utils');
+} = require('./tree-utils/counter-utils');
 
 const {
     TreeNode
