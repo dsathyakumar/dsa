@@ -83,6 +83,9 @@ exports.recursiveDiameter = (root) => {
 
 /**
   * Computes the Diameter of the Given Tree Iteratively
+  * Makes use of post order traversal and needs an additional hashmap
+  * to maintain the dimensions of nodes as the left and right subtrees
+  * are being traversed. (A bit high on space complexity)
   * @param {TreeNode} root
   * @returns {Number} diameter
   */
@@ -114,30 +117,41 @@ exports.diamter = (root) => {
     let maxDiameter = 0;
 
     while (currentNode !== null) {
+        // check for left and right subtrees
         hasLeft = (currentNode.left !== null);
         hasRight = (currentNode.right !== null);
 
+        // if a left or right exists, push into stack
+        // since the data is the last to be processed, it needs to be stored
+        // temporarily, and be retrieved for later processing.
         if (hasLeft || hasRight) {
             stack.unshift(currentNode);
         }
 
+        // if a left exists, process it
         if (hasLeft) {
             currentNode = currentNode.left;
             continue;
         }
 
+        // if a right exists, in the absence of the left, process it
         if (!hasLeft && hasRight) {
             currentNode = currentNode.right;
             continue
         }
 
+        // neither left nor right => lEAF => set dimensions for it into the map
         if (!hasLeft && !hasRight) {
             nodeDimensionsMap.set(currentNode, defaultLeafDimensions);
 
+            // retrieve immediate ancestor to process the RIGHT subtree
             while (prevNode === null) {
                 // peek the previous ancestor from the stack
                 prevNode = stack[0];
 
+                // this => the stack is empty.
+                // Set currentNode to null and break inner loop so that outer also breaks
+                // at this point we should have the maxDiameter.
                 if (!prevNode) {
                     maxDiameter = nodeDimensionsMap.get(currentNode).d;
                     currentNode = null;
@@ -166,12 +180,12 @@ exports.diamter = (root) => {
                 leftDimensions = nodeDimensionsMap.get(currentNode.left) || defaultDimensions;
                 rightDimensions = nodeDimensionsMap.get(currentNode.right) || defaultDimensions;
 
-                // delete the data stored for the left
+                // delete the data stored for the left (not necessary)
                 if (nodeDimensionsMap.has(currentNode.left)) {
                     nodeDimensionsMap.delete(currentNode.left);
                 }
 
-                // delete the data stored for the right
+                // delete the data stored for the right (not necessary)
                 if (nodeDimensionsMap.has(currentNode.right)) {
                     nodeDimensionsMap.delete(currentNode.right);
                 }
@@ -191,6 +205,8 @@ exports.diamter = (root) => {
         }
     }
 
+    // if not zero, since diameter is counted as number of edges
+    // what we have would be in terms of number of nodes. So do a -1 of the result.
     return (maxDiameter !== 0) ? (maxDiameter -1) : maxDiameter;
 };
 
