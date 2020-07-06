@@ -281,3 +281,7 @@ exports.numberOfEdges = root => {
 // the following are other terms used to refer to Leaf Nodes
 exports.getTerminalNodeCount = this.getLeafNodeCount;
 exports.getExternalNodeCount = this.getLeafNodeCount;
+
+exports.degreeOfTree = root => {
+
+};

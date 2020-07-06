@@ -39,11 +39,46 @@
 
  /**
   * Computes the Diameter of the Given Tree recursively
+  * We assume a null node to return a 0.
+  * Diameter computation requires knowledge of computing the height as well.
+  * Per the assumption, an empty tree would be a 0 and a Tree with only the root
+  * would have a height 1.
   * @param {TreeNode} root
   * @returns {Number} diameter
   */
-exports.recursiveDiameter = root => {
+exports.recursiveDiameter = (root) => {
+    // indirect recursion here.
+    const computeDimensions = (node) => {
+        // In the same computation we return both the height and diameter.
+        // Ultimate base case of recursion. There is no looping back here.
+        if (node === null || typeof node === 'undefined') {
+            return {
+                h: 0,
+                d: 0
+            };
+        }
+        
+        // recursive dimenions compute for LEFT subtree
+        const leftDimensions = computeDimensions(node.left);
 
+        // recursive dimenions compute for RIGHT subtree
+        const rightDimensions = computeDimensions(node.right);
+        
+        // return the height and diameter for every node
+        return {
+            h: (Math.max(leftDimensions.h, rightDimensions.h) + 1),
+            d: (Math.max(
+                // accounts for paths that go via the root
+                (leftDimensions.h + rightDimensions.h + 1),
+                // accounts for paths that dont go via the Root
+                Math.max(leftDimensions.d, rightDimensions.d)
+            ))
+        }
+    }
+
+    // begin the recursion from the root
+    let diameter = computeDimensions(root);
+    return (diameter !== 0) ? (diameter - 1) : (diamter);
 };
 
 /**
@@ -52,7 +87,111 @@ exports.recursiveDiameter = root => {
   * @returns {Number} diameter
   */
 exports.diamter = (root) => {
+    // when the tree is NULL
+    if (!root) {
+        console.warn(`Tree is empty!`);
+        return;
+    }
 
+    // stack to hold post order traversal
+    const stack = [];
+
+    // map to store dimensions of subtrees
+    const nodeDimensionsMap = new Map();
+
+    // default Node and LeafNode dimensions
+    const defaultLeafDimensions = {h: 1, d: 1};
+    const defaultDimensions = {h: 0, d: 0};
+
+    let currentNode = null;
+    let hasLeft = false;
+    let hasRight = false;
+    let prevNode = null;
+    let leftDimensions;
+    let rightDimensions;
+
+    // returnable maxDiameter
+    let maxDiameter = 0;
+
+    while (currentNode !== null) {
+        hasLeft = (currentNode.left !== null);
+        hasRight = (currentNode.right !== null);
+
+        if (hasLeft || hasRight) {
+            stack.unshift(currentNode);
+        }
+
+        if (hasLeft) {
+            currentNode = currentNode.left;
+            continue;
+        }
+
+        if (!hasLeft && hasRight) {
+            currentNode = currentNode.right;
+            continue
+        }
+
+        if (!hasLeft && !hasRight) {
+            nodeDimensionsMap.set(currentNode, defaultLeafDimensions);
+
+            while (prevNode === null) {
+                // peek the previous ancestor from the stack
+                prevNode = stack[0];
+
+                if (!prevNode) {
+                    currentNode = null;
+                    maxDiameter = nodeDimensionsMap.get(currentNode).d;
+                    break;
+                }
+
+                // if it has a right and if that right is not the same as currentNode
+                // process it. This is the usual step.
+                if (prevNode.right !== null && prevNode.right !== currentNode) {
+                    currentNode = prevNode.right;
+                    prevNode = null;
+                    break;
+                }
+
+                // if neither a right existed or if the currentNode that was processed is the right
+                // time to pop it off the stack.
+                // when its popped off the stack, its time to compute the
+                // LH (left subtree max-height), RH (right subtree max-height), LD (left diameter), RD (right diameter)
+                // push those details into the nodeDimensionsMap
+                // remove the details of its child nodes from the map
+
+                // pop it from stack and assign to currentNode (so that it backtracks)
+                currentNode = stack.shift();
+
+                // get left and right dimensions from the map
+                leftDimensions = nodeDimensionsMap.get(currentNode.left) || defaultDimensions;
+                rightDimensions = nodeDimensionsMap.get(currentNode.right) || defaultDimensions;
+
+                // delete the data stored for the left
+                if (nodeDimensionsMap.has(currentNode.left)) {
+                    nodeDimensionsMap.delete(currentNode.left);
+                }
+
+                // delete the data stored for the right
+                if (nodeDimensionsMap.has(currentNode.right)) {
+                    nodeDimensionsMap.delete(currentNode.right);
+                }
+
+                // set the dimensions for the currentNode (compute it)
+                nodeDimensionsMap.set(currentNode, {
+                    h: (Math.max(leftDimensions.h, rightDimensions.h) + 1),
+                    d: (Math.max(
+                        (leftDimensions.h + rightDimensions.h + 1),
+                        Math.max(leftDimensions.d, rightDimensions.d)
+                    ))
+                })
+
+                // reset prevNode to NULL, so that it can pick off the next ancestor from the stack
+                prevNode = null;
+            }
+        }
+    }
+
+    return maxDiameter;
 };
 
 /**
