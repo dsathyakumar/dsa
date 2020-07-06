@@ -139,8 +139,8 @@ exports.diamter = (root) => {
                 prevNode = stack[0];
 
                 if (!prevNode) {
-                    currentNode = null;
                     maxDiameter = nodeDimensionsMap.get(currentNode).d;
+                    currentNode = null;
                     break;
                 }
 
@@ -191,7 +191,7 @@ exports.diamter = (root) => {
         }
     }
 
-    return maxDiameter;
+    return (maxDiameter !== 0) ? (maxDiameter -1) : maxDiameter;
 };
 
 /**
