@@ -142,6 +142,7 @@ exports.diamter = (root) => {
 
         // neither left nor right => lEAF => set dimensions for it into the map
         if (!hasLeft && !hasRight) {
+            // set default leaf dimensions
             nodeDimensionsMap.set(currentNode, defaultLeafDimensions);
 
             // retrieve immediate ancestor to process the RIGHT subtree
