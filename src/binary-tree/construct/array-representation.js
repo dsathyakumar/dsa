@@ -20,7 +20,9 @@ const {
  * A NULL when enQ'd will have further references to NULL only (which can be optimized)
  * Try with:
  * [3, null, 4, null, null, null, 5, null, null, null, null, null, null, null, 6]
- * @param {Array} arr
+ * More can be found here:
+ * https://www.geeksforgeeks.org/construct-complete-binary-tree-given-array/
+ * @param {Array} arr (data in level order fashion)
  * @returns {TreeNode} root
  */
 exports.arrayToBinaryTree = (arr) => {
