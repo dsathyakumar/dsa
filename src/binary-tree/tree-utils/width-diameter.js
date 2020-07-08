@@ -375,3 +375,107 @@ exports.getLevelWithMaxNodeCount = (root) => {
 
     return levelWithMaxCount;
 };
+
+/**
+ * Computes the vertical width of the Binary Tree
+ * Same as vertical pre-order traversal, it computes the number of vertical lines
+ * that the binar tree can be split into.
+ * @param {TreeNode} root
+ */
+exports.verticalWidth = root => {
+    // if the Tree is empty, it would return a 0
+    // if the Tree has even 1 node (just root), 1 vertical line can be passed through it
+    // so it returns a value of 1
+    if (!root) {
+        console.warn(`Tree is empty!`);
+        return 0;
+    }
+
+    // to store the data of pre-order traversal temporarily
+    const stack = [];
+
+    // min and max HD (starting point of root => (x,y) => (0,0))
+    let minHD = 0;
+    let maxHD = 0;
+
+    let currentHorizontalDistance = 0;
+
+    let currentNode = root;
+    let prevNode = null;
+    
+    while (currentNode) {
+        // if a left or right subtree existed, push it into stack
+        // when back tracking, it can be used to process right
+        if (currentNode.left || currentNode.right) {
+            stack.shift(currentNode);
+        }
+
+        // process left first
+        // This is going from (x, y) => (x - 1, y - 1)
+        if (currentNode.left) {
+            currentHorizontalDistance = (currentHorizontalDistance - 1);
+            minHD = Math.min(currentHorizontalDistance, minHD);
+            currentNode = currentNode.left;
+            continue;
+        }
+
+        // process right only in absence of left
+        // This is going from (x, y) => (x + 1, y - 1)
+        if (currentNode.right) {
+            currentHorizontalDistance = (currentHorizontalDistance + 1);
+            maxHD = Math.max(currentHorizontalDistance, maxHD);
+            currentNode = currentNode.right;
+            continue;
+        }
+
+        // leaf node
+        if (!currentNode.left && !currentNode.right) {
+            while (!prevNode) {
+                // peek the stack
+                // pop out only if right subtree was already processed
+                // or a right subtree itself was absent
+                prevNode = stack[0];
+
+                // nothing in stack => stack is empty, traversal is done
+                // set current node to NULL (so that outer loop terminates)
+                // terminate inner loop
+                if (!prevNode) {
+                    currentNode = null;
+                    break;
+                }
+
+                // since parent, exists, loop back to parent HD
+                // if moving from left to parent
+                    // => back track by increment
+                    // This is going from (x - 1, y - 1) => (x, y)
+                // if moving from right to parent
+                    // => back track by decrement
+                    // This is going from (x + 1, y - 1) => (x, y)
+                if (prevNode.left === currentNode) {
+                    currentHorizontalDistance = (currentHorizontalDistance + 1);
+                } else {
+                    currentHorizontalDistance = (currentHorizontalDistance - 1);
+                }
+
+                // if the parent had a right and if the right wasn't the current node
+                // proceed to traverse RIGHT subtree
+                // increment currentHorizontalDistance
+                if (prevNode.right && prevNode.right !== currentNode) {
+                    currentNode = prevNode.right;
+                    prevNode = null;
+                    currentHorizontalDistance = (currentHorizontalDistance + 1);
+                    break;
+                }
+
+                // else => RIGHT absent or RIGHT node already traversed (current node ==== prevNode.right)
+                // pop off from stack and reset prevNode to null, so that the next prev ancestor
+                // can be traversed for its right subtree
+                currentNode = stack.shift();
+                prevNode = null;
+            }
+        }
+    }
+
+    // return the range
+    return (maxHD - minHD + 1);
+};
