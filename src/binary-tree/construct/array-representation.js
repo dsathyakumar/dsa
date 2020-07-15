@@ -87,49 +87,47 @@ exports.arrayToBinaryTree = (arr) => {
     return rootNode;
 };
 
-exports.BinaryTreeToArray = (root) => {
+exports.BinaryTreeToArray = root => {
+    const result = [];
+  
     if (!root) {
-        console.warn(`Tree is empty!`);
-        return;
+      return result;
     }
-
-    const bTreeArray = [];
+  
     const q = [root];
-
+    let size = q.length;
     let deqNode;
-
-    while (q.length) {
-        deqNode = q.shift();
-
-        // if a node exists (if its a not null),
-        // then push that value. Else push a NULL
-        // A NULL is possible here when dealing with a LEAF node.
-        if (deqNode) {
-            bTreeArray.push(deqNode.data || deqNode.val);
-        } else {
-            bTreeArray.push(null);
+    let hasNotNullNode = true;
+  
+    // level loop
+    while (q.length && hasNotNullNode) {
+        hasNotNullNode = false;
+        // nodes in a level loop
+        while (size !== 0) {
+            deqNode = q.shift();
+  
+            result.push(deqNode ? deqNode.val : null);
+  
+            if ((!hasNotNullNode) && (deqNode) && (deqNode.left || deqNode.right)) {
+              hasNotNullNode = true;
+            }
+  
+            if (deqNode && deqNode.left) {
+              q.push(deqNode.left)
+            } else {
+              q.push(null);
+            }
+  
+            if (deqNode && deqNode.right) {
+              q.push(deqNode.right);
+            } else {
+              q.push(null);
+            }
+  
+            --size;
         }
-
-        // if a LEFT subtree exists, push that into the Q
-        // if Not, as long as the current node is not null, push a NULL
-        // this means => current node doesn't have a LEFT or is a LEAF node
-        // By doing this, we don't push a NULL for a null node (previously included NULL)
-        if (deqNode && deqNode.left) {
-            q.push(deqNode.left);
-        } else if (deqNode !== null) {
-            q.push(null);
-        }
-
-        // if a RIGHT subtree exists, push that into the Q
-        // if Not, as long as the current node is not null, push a NULL
-        // this means => current node doesn't have a RIGHT or is a LEAF node
-        // By doing this, we don't push a NULL for a null node (previously included NULL)
-        if (deqNode && deqNode.right) {
-            q.push(deqNode.right);
-        } else if (deqNode !== null) {
-            q.push(null);
-        }
+        size = q.length;
     }
-
-    return bTreeArray;
-};
+  
+    return result;
+  };
